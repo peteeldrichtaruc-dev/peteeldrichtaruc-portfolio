@@ -44,6 +44,9 @@
 	<link
 		href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
 		rel="stylesheet">
+
+	<!-- Fancybox CSS Gallery Library -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 </head>
 
 <body class="bg-slate-50 text-slate-800 font-['Plus_Jakarta_Sans',sans-serif] antialiased selection:bg-slate-200">
@@ -76,12 +79,10 @@
 				<!-- Profile Photo Avatar -->
 				<div class="shrink-0">
 					<div class="relative group">
-						<!-- Subtle background accent shadow -->
 						<div
 							class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-600 to-slate-900 opacity-20 blur-md transition group-hover:opacity-30">
 						</div>
 
-						<!-- Image container -->
 						<img src="/avatar.png" alt="Pete Eldrich Taruc"
 							class="relative w-48 h-48 md:w-56 md:h-56 object-cover rounded-2xl border-2 border-white shadow-md bg-slate-100" />
 					</div>
@@ -314,7 +315,7 @@
 			</div>
 		</section>
 
-		<!-- Certifications & Credentials Section -->
+		<!-- Certifications Section -->
 		<section id="certifications" class="py-24 px-6 border-b border-slate-200/60 bg-slate-50/50">
 			<div class="max-w-5xl mx-auto">
 				<div class="mb-14" data-aos="fade-up">
@@ -412,18 +413,61 @@
 					data-aos="fade-up">
 					<div class="grid grid-cols-1 lg:grid-cols-12">
 
-						<!-- Project Image / Preview Side -->
+						<!-- Main Featured Screenshot Preview -->
 						<div
-							class="lg:col-span-6 bg-slate-100 p-6 flex items-center justify-center border-b lg:border-b-0 lg:border-r border-slate-200">
-							<div
-								class="relative w-full rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-white">
-								<img src="/peteeldrichtaruc-portfolio/screenshots/RoomsForRent-dashboard.png"
-									alt="RoomsForRent SaaS Dashboard"
-									class="w-full h-auto object-cover group-hover:scale-105 transition duration-500" />
+							class="lg:col-span-6 bg-slate-100 p-6 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-slate-200">
+							<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-dashboard.png" data-fancybox="roomsforrent"
+								data-caption="RoomsForRent — Main Analytics Dashboard"
+								class="relative w-full rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-white block group/img">
+								<img src="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-dashboard.png"
+									alt="RoomsForRent Dashboard"
+									class="w-full h-auto object-cover group-hover/img:scale-105 transition duration-500" />
+								<div
+									class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center text-white font-semibold text-xs gap-2">
+									<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+											d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+									</svg>
+									Expand Main Dashboard
+								</div>
+							</a>
+
+							<!-- Quick Access Lightbox Gallery Grid -->
+							<div class="mt-4 pt-4 border-t border-slate-200/80">
+								<div class="flex items-center justify-between mb-2">
+									<span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Explore 18 Interactive Views</span>
+									<span class="text-[11px] font-medium text-blue-600">Click to view lightbox</span>
+								</div>
+
+								<div class="grid grid-cols-4 gap-2">
+									<!-- Visible Thumbnail 1: Properties -->
+									<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-properties.png" data-fancybox="roomsforrent" data-caption="Property Portfolio List & Filtering" class="relative rounded-lg overflow-hidden border border-slate-200 h-16 bg-white hover:opacity-90 transition">
+										<img src="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-properties.png" alt="Properties" class="w-full h-full object-cover" />
+									</a>
+
+									<!-- Visible Thumbnail 2: Leases -->
+									<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-leases.png" data-fancybox="roomsforrent" data-caption="Active Lease Agreements & Occupancy Status" class="relative rounded-lg overflow-hidden border border-slate-200 h-16 bg-white hover:opacity-90 transition">
+										<img src="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-leases.png" alt="Leases" class="w-full h-full object-cover" />
+									</a>
+
+									<!-- Visible Thumbnail 3: Invoices -->
+									<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-invoices.png" data-fancybox="roomsforrent" data-caption="Automated Monthly Invoices Management" class="relative rounded-lg overflow-hidden border border-slate-200 h-16 bg-white hover:opacity-90 transition">
+										<img src="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-invoices.png" alt="Invoices" class="w-full h-full object-cover" />
+									</a>
+
+									<!-- Visible Thumbnail 4: Public Checkout (+More Badge) -->
+									<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-publicCheckout.png" data-fancybox="roomsforrent" data-caption="Integrated Stripe Checkout Session" class="relative rounded-lg overflow-hidden border border-slate-200 h-16 bg-slate-900 group/more">
+										<img src="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-publicCheckout.png" alt="Checkout" class="w-full h-full object-cover opacity-30 group-hover/more:opacity-20 transition" />
+										<div class="absolute inset-0 flex flex-col items-center justify-center text-white font-extrabold text-xs">
+											<span>+14</span>
+											<span class="text-[9px] font-normal text-slate-300">More</span>
+										</div>
+									</a>
+								</div>
 							</div>
 						</div>
 
-						<!-- Project Info Side -->
+						<!-- Project Details Side -->
 						<div class="lg:col-span-6 p-8 flex flex-col justify-between">
 							<div>
 								<div class="flex items-center justify-between gap-2 mb-3">
@@ -440,13 +484,10 @@
 								</h3>
 
 								<p class="text-slate-600 text-sm leading-relaxed mb-6">
-									A modern property management platform for landlords and boarding house operators.
-									Features live occupancy tracking, automated monthly invoicing, multi-level
-									property/room hierarchies, and server-side paginated search over deeply nested
-									Eloquent relationships.
+									A comprehensive property management system engineered for boarding houses and rental operators. Features live occupancy tracking, Stripe payment gateway processing, automated monthly invoicing, multi-level property/room hierarchies, and debounced search over deeply nested Eloquent relationships.
 								</p>
 
-								<!-- Key Engineering Highlights -->
+								<!-- Key Features List -->
 								<div class="space-y-2 mb-6 text-xs text-slate-700 font-medium">
 									<div class="flex items-center gap-2">
 										<svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor"
@@ -454,7 +495,7 @@
 											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 												d="M5 13l4 4L19 7" />
 										</svg>
-										<span>Server-Side Rendering (SSR) via Inertia.js</span>
+										<span>Server-Side Rendering (SSR) via Inertia.js + React</span>
 									</div>
 									<div class="flex items-center gap-2">
 										<svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor"
@@ -462,7 +503,7 @@
 											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 												d="M5 13l4 4L19 7" />
 										</svg>
-										<span>Debounced search queries across nested models</span>
+										<span>Integrated Stripe Checkout API & Async Webhooks</span>
 									</div>
 									<div class="flex items-center gap-2">
 										<svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor"
@@ -470,32 +511,25 @@
 											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 												d="M5 13l4 4L19 7" />
 										</svg>
-										<span>Full Docker Compose environment & Vite build pipeline</span>
+										<span>Containerized Docker development & Vite build environment</span>
 									</div>
 								</div>
 
 								<!-- Tech Badges -->
 								<div class="flex flex-wrap gap-1.5 mb-8">
-									<span
-										class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">Laravel
-										13</span>
-									<span
-										class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">Inertia.js</span>
-									<span
-										class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">SSR</span>
-									<span
-										class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">React</span>
-									<span
-										class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">TypeScript</span>
-									<span
-										class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">PostgreSQL</span>
-									<span
-										class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">Docker</span>
+									<span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">Laravel 13</span>
+									<span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">Inertia.js</span>
+									<span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">SSR</span>
+									<span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">React</span>
+									<span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">TypeScript</span>
+									<span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">Stripe API</span>
+									<span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">PostgreSQL</span>
+									<span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-md">Docker</span>
 								</div>
 							</div>
 
 							<!-- Action Buttons -->
-							<div class="flex items-center gap-3 pt-4 border-t border-slate-100">
+							<div class="flex items-center justify-between pt-4 border-t border-slate-100">
 								<a href="https://github.com/peteeldrichtaruc-dev/rooms-for-rent" target="_blank"
 									rel="noopener noreferrer"
 									class="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg transition">
@@ -505,10 +539,34 @@
 									</svg>
 									View Code
 								</a>
+
+								<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-dashboard.png" data-fancybox="roomsforrent" data-caption="RoomsForRent — Main Analytics Dashboard" class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 transition">
+									View All Screenshots (18)
+									<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+									</svg>
+								</a>
 							</div>
 						</div>
 
 					</div>
+				</div>
+
+				<!-- Hidden Lightbox Gallery Anchor Links -->
+				<div class="hidden">
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-propertyView.png" data-fancybox="roomsforrent" data-caption="Property Details Workspace & Room Overview"></a>
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-rooms.png" data-fancybox="roomsforrent" data-caption="Rooms List & Availability Status"></a>
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-roomView.png" data-fancybox="roomsforrent" data-caption="Room Details & Assigned Tenant History"></a>
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-tenants.png" data-fancybox="roomsforrent" data-caption="Tenants Directory & Contact Management"></a>
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-tenantView.png" data-fancybox="roomsforrent" data-caption="Tenant Profile & Active Lease Details"></a>
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-leaseView.png" data-fancybox="roomsforrent" data-caption="Lease Agreement Workspace & Billing Log"></a>
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-invoiceView.png" data-fancybox="roomsforrent" data-caption="Invoice Breakdown & Real-Time Payment Status"></a>
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-publicInvoice.png" data-fancybox="roomsforrent" data-caption="Public Tenant Invoice View & Payment Link"></a>
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-welcome.png" data-fancybox="roomsforrent" data-caption="Public Welcome Landing Page"></a>
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-login.png" data-fancybox="roomsforrent" data-caption="User Portal Login"></a>
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-register.png" data-fancybox="roomsforrent" data-caption="Operator Account Registration"></a>
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-forgotPassword.png" data-fancybox="roomsforrent" data-caption="Forgot Password Recovery Flow"></a>
+					<a href="/peteeldrichtaruc-portfolio/screenshots/roomsforrent/RoomsForRent-resetPassword.png" data-fancybox="roomsforrent" data-caption="Password Reset Verification"></a>
 				</div>
 
 			</div>
@@ -537,12 +595,30 @@
 
 		<!-- Footer -->
 		<footer class="py-8 px-6 bg-white text-center text-xs text-slate-400">
-			© 2026 Pete Eldrich Taruc. Built with Vite, Tailwind CSS, & AOS.
+			© 2026 Pete Eldrich Taruc. Built with Vite, Tailwind CSS, AOS, & Fancybox.
 		</footer>
 
 	</main>
 
 	<script type="module" src="/src/main.js"></script>
+
+	<!-- Fancybox JS Library -->
+	<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+	<script>
+		Fancybox.bind("[data-fancybox]", {
+			Hash: false,
+			Thumbs: {
+				autoStart: true,
+			},
+			Toolbar: {
+				display: {
+					left: ["infobar"],
+					middle: [],
+					right: ["slideshow", "fullscreen", "thumbs", "close"],
+				},
+			},
+		});
+	</script>
 </body>
 
 </html>
