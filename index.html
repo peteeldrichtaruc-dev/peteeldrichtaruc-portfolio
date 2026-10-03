@@ -108,7 +108,8 @@
 						</p>
 						<p>
 							<strong class="text-slate-900 font-bold">Engineer's Mindset:</strong> Merges defensive
-							coding practices and clean software architecture to produce robust, containerized applications
+							coding practices and clean software architecture to produce robust, containerized
+							applications
 							that fulfill business objectives.
 						</p>
 					</div>
@@ -670,6 +671,12 @@
 
 	<!-- Scroll to top -->
 	<script>
+		const yearSpan = document.getElementById('current-year');
+
+		if (yearSpan) {
+			yearSpan.textContent = new Date().getFullYear();
+		}
+
 		const scrollToTopBtn = document.getElementById('scrollToTopBtn');
 
 		// Show/Hide button depending on scroll depth
