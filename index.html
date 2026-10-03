@@ -31,6 +31,9 @@
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="manifest" href="/site.webmanifest">
 
+	<!-- Fancybox -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
@@ -714,22 +717,25 @@
 		});
 	</script>
 
-
-	<!-- Fancybox JS Library -->
+	<!-- Fancybox JS & Initialization -->
 	<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 	<script>
-		Fancybox.bind("[data-fancybox]", {
-			Hash: false,
-			Thumbs: {
-				autoStart: true,
-			},
-			Toolbar: {
-				display: {
-					left: ["infobar"],
-					middle: [],
-					right: ["slideshow", "fullscreen", "thumbs", "close"],
-				},
-			},
+		document.addEventListener('DOMContentLoaded', () => {
+			if (typeof Fancybox !== 'undefined') {
+				Fancybox.bind('[data-fancybox="roomsforrent"]', {
+					Hash: false,
+					Thumbs: {
+						autoStart: true,
+					},
+					Toolbar: {
+						display: {
+							left: ["infobar"],
+							middle: [],
+							right: ["slideshow", "fullscreen", "thumbs", "close"],
+						},
+					},
+				});
+			}
 		});
 	</script>
 </body>
