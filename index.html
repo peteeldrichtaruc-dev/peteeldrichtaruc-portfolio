@@ -17,7 +17,7 @@
 
 	<!-- Open Graph / LinkedIn & Social Previews -->
 	<meta property="og:type" content="website">
-	<meta property="og:url" content="https://peteeldrichtaruc.dev"> <!-- Replace with your actual live domain -->
+	<meta property="og:url" content="https://peteeldrichtaruc.dev">
 	<meta property="og:title" content="Pete Eldrich Taruc | Full-Stack Engineer">
 	<meta property="og:description"
 		content="Specializing in scaling robust web apps using Laravel, Vue.js, TypeScript, and Docker.">
@@ -30,9 +30,6 @@
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="manifest" href="/site.webmanifest">
-
-	<!-- Fancybox -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 
 	<script type="application/ld+json">
 	{
@@ -63,7 +60,6 @@
 	}
   </script>
 </head>
-
 
 <body class="bg-slate-50 text-slate-800 font-['Plus_Jakarta_Sans',sans-serif] antialiased selection:bg-slate-200">
 
@@ -714,28 +710,6 @@
 				top: 0,
 				behavior: 'smooth'
 			});
-		});
-	</script>
-
-	<!-- Fancybox JS & Initialization -->
-	<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-	<script>
-		document.addEventListener('DOMContentLoaded', () => {
-			if (typeof Fancybox !== 'undefined') {
-				Fancybox.bind('[data-fancybox="roomsforrent"]', {
-					Hash: false,
-					Thumbs: {
-						autoStart: true,
-					},
-					Toolbar: {
-						display: {
-							left: ["infobar"],
-							middle: [],
-							right: ["slideshow", "fullscreen", "thumbs", "close"],
-						},
-					},
-				});
-			}
 		});
 	</script>
 </body>
