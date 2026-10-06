@@ -5,6 +5,15 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+	<!-- Dark Mode Prevention Flash Script -->
+	<script>
+		if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+			document.documentElement.classList.add('dark');
+		} else {
+			document.documentElement.classList.remove('dark');
+		}
+	</script>
+
 	<!-- Primary Indexing SEO -->
 	<title>Pete Eldrich Taruc | Full-Stack Engineer</title>
 	<meta name="title" content="Pete Eldrich Taruc | Full-Stack Engineer">
@@ -63,15 +72,32 @@
 	</script>
 </head>
 
-<body class="bg-slate-100 text-slate-800 font-['Plus_Jakarta_Sans',sans-serif] antialiased selection:bg-slate-200">
+<body class="bg-white text-slate-900 dark:bg-[#0b1329] dark:text-white transition-colors duration-200">
 
 	<!-- Main Resume Wrapper Layout -->
 	<div class="max-w-7xl mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-12 gap-8 lg:p-8">
 
 		<!-- LEFT COLUMN: Sticky Resume Sidebar Profile -->
 		<aside
-			class="lg:col-span-4 flex flex-col justify-between bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-8 lg:sticky lg:top-8 lg:h-[calc(100vh-4rem)] shadow-sm overflow-y-auto text-center">
+			class="lg:col-span-4 flex flex-col justify-between bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-8 lg:sticky lg:top-8 lg:h-[calc(100vh-4rem)] shadow-sm overflow-y-auto text-center transition-colors duration-300">
 			<div>
+				<!-- Theme Toggle & Header Bar -->
+				<div class="flex justify-end mb-2">
+					<button id="themeToggleBtn" type="button" aria-label="Toggle Dark Mode"
+						class="p-2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+						<!-- Sun icon (shows in dark mode) -->
+						<svg id="themeToggleSunIcon" class="hidden w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+							<path
+								d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"
+								fill-rule="evenodd" clip-rule="evenodd"></path>
+						</svg>
+						<!-- Moon icon (shows in light mode) -->
+						<svg id="themeToggleMoonIcon" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+							<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+						</svg>
+					</button>
+				</div>
+
 				<!-- Profile Avatar & Status Badge -->
 				<div class="relative group mb-6 flex flex-col items-center justify-center">
 					<div class="relative w-32 h-32 mb-4">
@@ -79,33 +105,34 @@
 							class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-600 to-slate-900 opacity-20 blur-md transition group-hover:opacity-30">
 						</div>
 						<img src="/avatar.png" alt="Pete Eldrich Taruc"
-							class="relative w-32 h-32 object-cover rounded-2xl border-2 border-white shadow-md bg-slate-100" />
+							class="relative w-32 h-32 object-cover rounded-2xl border-2 border-white dark:border-slate-800 shadow-md bg-slate-100 dark:bg-slate-800" />
 					</div>
 					<div
-						class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200/60 text-teal-700 text-xs font-semibold">
-						<span class="w-2 h-2 rounded-full bg-teal-600 animate-pulse"></span>
+						class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 dark:bg-teal-950/50 border border-teal-200/60 dark:border-teal-800/60 text-teal-700 dark:text-teal-400 text-xs font-semibold">
+						<span class="w-2 h-2 rounded-full bg-teal-600 dark:bg-teal-400 animate-pulse"></span>
 						Open To Work
 					</div>
 				</div>
 
 				<!-- Header Bio Info -->
 				<div class="text-center mb-6">
-					<h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Pete Eldrich Taruc</h1>
-					<p class="text-sm font-semibold text-slate-600 mt-1">Full-Stack Engineer</p>
-					<p class="text-xs text-slate-500 mt-1">Cagayan de Oro City, Philippines</p>
+					<h1 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Pete Eldrich Taruc
+					</h1>
+					<p class="text-sm font-semibold text-slate-600 dark:text-slate-400 mt-1">Full-Stack Engineer</p>
+					<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Cagayan de Oro City, Philippines</p>
 				</div>
 
-				<p class="text-slate-600 text-xs leading-relaxed mb-6 text-center">
+				<p class="text-slate-600 dark:text-slate-300 text-xs leading-relaxed mb-6 text-center">
 					I leverage AI tools to boost development on building maintainable and scalable software while also
 					maintaining best practices and high standards.
 				</p>
 
-				<hr class="border-slate-100 mb-6" />
+				<hr class="border-slate-100 dark:border-slate-800 mb-6" />
 
 				<!-- Quick Sidebar Links -->
 				<div class="space-y-3 text-xs mb-6 flex flex-col items-center">
 					<a href="mailto:peteeldrichtaruc.dev@gmail.com"
-						class="flex items-center justify-center gap-3 text-slate-600 hover:text-slate-600 transition font-medium">
+						class="flex items-center justify-center gap-3 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition font-medium">
 						<svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor"
 							viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -114,7 +141,7 @@
 						peteeldrichtaruc.dev@gmail.com
 					</a>
 					<a href="https://github.com/peteeldrichtaruc-dev" target="_blank" rel="noopener noreferrer"
-						class="flex items-center justify-center gap-3 text-slate-600 hover:text-slate-600 transition font-medium">
+						class="flex items-center justify-center gap-3 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition font-medium">
 						<svg class="w-4 h-4 text-slate-400 shrink-0" fill="currentColor" viewBox="0 0 24 24">
 							<path fill-rule="evenodd" clip-rule="evenodd"
 								d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
@@ -124,28 +151,32 @@
 				</div>
 
 				<!-- Navigation Quick Jumps -->
-				<nav class="hidden lg:flex flex-col items-center space-y-2 text-xs font-semibold text-slate-500 mb-6">
-					<a href="#about" class="hover:text-slate-600 transition">01. Summary</a>
-					<a href="#experience" class="hover:text-slate-600 transition">02. Experience</a>
-					<a href="#projects" class="hover:text-slate-600 transition">03. Projects</a>
-					<a href="#skills" class="hover:text-slate-600 transition">04. Tech Stack</a>
-					<a href="#certifications" class="hover:text-slate-600 transition">05. Certifications</a>
-					<a href="#education" class="hover:text-slate-600 transition">06. Education</a>
+				<nav
+					class="hidden lg:flex flex-col items-center space-y-2 text-xs font-semibold text-slate-500 dark:text-slate-400 mb-6">
+					<a href="#about" class="hover:text-slate-900 dark:hover:text-white transition">01. Summary</a>
+					<a href="#experience" class="hover:text-slate-900 dark:hover:text-white transition">02.
+						Experience</a>
+					<a href="#projects" class="hover:text-slate-900 dark:hover:text-white transition">03. Projects</a>
+					<a href="#skills" class="hover:text-slate-900 dark:hover:text-white transition">04. Tech Stack</a>
+					<a href="#certifications" class="hover:text-slate-900 dark:hover:text-white transition">05.
+						Certifications</a>
+					<a href="#education" class="hover:text-slate-900 dark:hover:text-white transition">06. Education</a>
 				</nav>
 			</div>
 
 			<!-- Sidebar CTA Buttons -->
-			<div class="space-y-3 pt-4 border-t border-slate-100">
+			<div class="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-800">
 				<a href="/resume/Pete Eldrich Taruc - Resume.pdf" target="_blank" rel="noopener noreferrer"
-					class="w-full bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-lg font-semibold text-xs transition flex items-center justify-center gap-2 shadow-sm">
-					<svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					class="w-full bg-slate-900 dark:bg-blue-600 hover:bg-slate-800 dark:hover:bg-blue-500 text-white py-3 rounded-lg font-semibold text-xs transition flex items-center justify-center gap-2 shadow-sm">
+					<svg class="w-4 h-4 text-slate-300 dark:text-blue-100" fill="none" stroke="currentColor"
+						viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 							d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
 					</svg>
 					Download PDF Resume
 				</a>
 				<a href="#contact"
-					class="w-full bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 py-3 rounded-lg font-semibold text-xs transition flex items-center justify-center gap-2">
+					class="w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 py-3 rounded-lg font-semibold text-xs transition flex items-center justify-center gap-2">
 					Get in Touch
 				</a>
 			</div>
@@ -155,38 +186,44 @@
 		<main class="lg:col-span-8 space-y-8">
 
 			<!-- 1. Summary / Hero Card -->
-			<section id="about" class="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-10 shadow-sm"
+			<section id="about"
+				class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm transition-colors duration-300"
 				data-aos="fade-up">
-				<h2 class="text-xs font-bold text-slate-600 uppercase tracking-widest mb-2">Overview</h2>
-				<h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-4">
+				<h2 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2">Overview
+				</h2>
+				<h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">
 					Building Maintainable & Scalable Software.
 				</h3>
-				<p class="text-slate-600 text-sm leading-relaxed antialiased mb-6">
-					Full-Stack Engineer specializing in Laravel, Vue.js, TypeScript, and Docker. Experience delivering
+				<p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed antialiased mb-6">
+					Specializes in Laravel, Vue.js, TypeScript, and Docker. Experience delivering
 					production-ready web platforms and modern frontend interfaces.
 				</p>
 			</section>
 
 			<!-- 2. Professional Experience -->
-			<section id="experience" class="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-10 shadow-sm">
+			<section id="experience"
+				class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm transition-colors duration-300">
 				<div class="mb-8" data-aos="fade-up">
-					<h2 class="text-xs font-bold text-slate-600 uppercase tracking-widest mb-1">Career Timeline</h2>
-					<p class="text-2xl font-extrabold text-slate-900">Work Experience</p>
+					<h2 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-1">
+						Career Timeline</h2>
+					<p class="text-2xl font-extrabold text-slate-900 dark:text-white">Work Experience</p>
 				</div>
 
 				<div class="space-y-10">
 					<!-- eFox Solutions Inc. -->
-					<div class="relative pl-6 border-l-2 border-slate-200" data-aos="fade-up">
-						<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-2 border-slate-900">
+					<div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
+						<div
+							class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-blue-500">
 						</div>
 						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-							<h3 class="text-lg font-bold text-slate-900">Full Stack Developer <span
+							<h3 class="text-lg font-bold text-slate-900 dark:text-white">Full Stack Developer <span
 									class="text-slate-400 font-normal">at eFox Solutions Inc.</span></h3>
 							<span
-								class="text-xs font-mono font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded w-fit">Mar
+								class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded w-fit">Mar
 								2024 – Jul 2026</span>
 						</div>
-						<ul class="text-slate-600 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
+						<ul
+							class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
 							<li>
 								Maintained internal web applications for core business operations.
 							</li>
@@ -201,17 +238,19 @@
 					</div>
 
 					<!-- Questronix Corporation -->
-					<div class="relative pl-6 border-l-2 border-slate-200" data-aos="fade-up">
-						<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-2 border-slate-300">
+					<div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
+						<div
+							class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700">
 						</div>
 						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-							<h3 class="text-lg font-bold text-slate-900">Full Stack Developer <span
+							<h3 class="text-lg font-bold text-slate-900 dark:text-white">Full Stack Developer <span
 									class="text-slate-400 font-normal">at Questronix Corporation</span></h3>
 							<span
-								class="text-xs font-mono font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded w-fit">Sep
+								class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded w-fit">Sep
 								2022 – Mar 2024</span>
 						</div>
-						<ul class="text-slate-600 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
+						<ul
+							class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
 							<li>
 								Fixed bugs on internal applications.
 							</li>
@@ -226,17 +265,19 @@
 					</div>
 
 					<!-- LPM Software -->
-					<div class="relative pl-6 border-l-2 border-slate-200" data-aos="fade-up">
-						<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-2 border-slate-300">
+					<div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
+						<div
+							class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700">
 						</div>
 						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-							<h3 class="text-lg font-bold text-slate-900">Web Developer <span
+							<h3 class="text-lg font-bold text-slate-900 dark:text-white">Web Developer <span
 									class="text-slate-400 font-normal">at LPM Software</span></h3>
 							<span
-								class="text-xs font-mono font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded w-fit">Nov
+								class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded w-fit">Nov
 								2021 – Jul 2022</span>
 						</div>
-						<ul class="text-slate-600 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
+						<ul
+							class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
 							<li>
 								Rebuilt existing application.
 							</li>
@@ -250,17 +291,19 @@
 					</div>
 
 					<!-- T22 Media LLC -->
-					<div class="relative pl-6 border-l-2 border-slate-200" data-aos="fade-up">
-						<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-2 border-slate-300">
+					<div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
+						<div
+							class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700">
 						</div>
 						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-							<h3 class="text-lg font-bold text-slate-900">Web Developer <span
+							<h3 class="text-lg font-bold text-slate-900 dark:text-white">Web Developer <span
 									class="text-slate-400 font-normal">at T22 Media LLC</span></h3>
 							<span
-								class="text-xs font-mono font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded w-fit">Mar
+								class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded w-fit">Mar
 								2020 – Oct 2020</span>
 						</div>
-						<ul class="text-slate-600 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
+						<ul
+							class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
 							<li>
 								Developed web application from frontend to backend.
 							</li>
@@ -271,17 +314,19 @@
 					</div>
 
 					<!-- Cloud Sea Media Group -->
-					<div class="relative pl-6 border-l-2 border-slate-200" data-aos="fade-up">
-						<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-2 border-slate-300">
+					<div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
+						<div
+							class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700">
 						</div>
 						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-							<h3 class="text-lg font-bold text-slate-900">Frontend Developer <span
+							<h3 class="text-lg font-bold text-slate-900 dark:text-white">Frontend Developer <span
 									class="text-slate-400 font-normal">at Cloud Sea Media Group</span></h3>
 							<span
-								class="text-xs font-mono font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded w-fit">Sep
+								class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded w-fit">Sep
 								2016 – Aug 2017</span>
 						</div>
-						<ul class="text-slate-600 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
+						<ul
+							class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
 							<li>
 								Developed features on the frontend side.
 							</li>
@@ -292,17 +337,19 @@
 					</div>
 
 					<!-- Winged Media -->
-					<div class="relative pl-6 border-l-2 border-slate-200" data-aos="fade-up">
-						<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-2 border-slate-300">
+					<div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
+						<div
+							class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700">
 						</div>
 						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-							<h3 class="text-lg font-bold text-slate-900">Junior Web Developer <span
+							<h3 class="text-lg font-bold text-slate-900 dark:text-white">Junior Web Developer <span
 									class="text-slate-400 font-normal">at Winged Media</span></h3>
 							<span
-								class="text-xs font-mono font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded w-fit">Sep
+								class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded w-fit">Sep
 								2016 – Nov 2016</span>
 						</div>
-						<ul class="text-slate-600 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
+						<ul
+							class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
 							<li>
 								Developed features on existing web applications.
 							</li>
@@ -312,72 +359,77 @@
 			</section>
 
 			<!-- 3. Featured Projects with Screenshots -->
-			<section id="projects" class="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-10 shadow-sm">
+			<section id="projects"
+				class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm transition-colors duration-300">
 				<div class="mb-8" data-aos="fade-up">
-					<h2 class="text-xs font-bold text-slate-600 uppercase tracking-widest mb-1">Portfolio</h2>
-					<p class="text-2xl font-extrabold text-slate-900">Featured Projects</p>
+					<h2 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-1">
+						Portfolio</h2>
+					<p class="text-2xl font-extrabold text-slate-900 dark:text-white">Featured Projects</p>
 				</div>
 
 				<div class="space-y-10">
 					<!-- RoomsForRent SaaS -->
-					<div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:bg-white transition shadow-2xs group"
+					<div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 transition shadow-2xs group"
 						data-aos="fade-up">
-						<div class="overflow-hidden border-b border-slate-200 bg-slate-100 aspect-video">
+						<div
+							class="overflow-hidden border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 aspect-video">
 							<img src="/screenshots/roomsforrent/RoomsForRent-dashboard.png"
 								alt="RoomsForRent Dashboard Screenshot"
 								class="w-full h-full object-cover group-hover:scale-102 transition duration-300" />
 						</div>
 						<div class="p-6">
 							<div class="flex flex-col sm:flex-row justify-between items-start gap-2 mb-3">
-								<h3 class="text-xl font-bold text-slate-900">RoomsForRent</h3>
+								<h3 class="text-xl font-bold text-slate-900 dark:text-white">RoomsForRent</h3>
 								<span
-									class="text-xs font-mono font-medium text-slate-700 bg-blue-50 border border-blue-200/60 px-2.5 py-1 rounded">Multi-Tenant
+									class="text-xs font-mono font-medium text-slate-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-800/60 px-2.5 py-1 rounded">Multi-Tenant
 									SaaS</span>
 							</div>
-							<p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+							<p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
 								A multi-tenant property management platform engineered for boarding house operators.
 								Features live occupancy tracking, Stripe billing, automatic invoicing, and multi-tenant
 								domain routing.
 							</p>
 							<div class="flex flex-wrap gap-1.5 mb-4">
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">Laravel
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Laravel
 									13</span>
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">Inertia.js</span>
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Inertia.js</span>
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">React</span>
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">React</span>
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">TypeScript</span>
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">TypeScript</span>
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">Docker</span>
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Docker</span>
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">Stripe</span>
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Stripe</span>
 							</div>
 							<a href="https://github.com/peteeldrichtaruc-dev/rooms-for-rent" target="_blank"
 								rel="noopener noreferrer"
-								class="text-xs font-bold text-slate-600 hover:text-slate-800 transition inline-flex items-center gap-1">
+								class="text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition inline-flex items-center gap-1">
 								View GitHub Repository &rarr;
 							</a>
 						</div>
 					</div>
 
 					<!-- Enterprise Digital Banking Platform -->
-					<div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:bg-white transition shadow-2xs group"
+					<div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 transition shadow-2xs group"
 						data-aos="fade-up">
-						<div class="overflow-hidden border-b border-slate-200 bg-slate-100 aspect-video">
+						<div
+							class="overflow-hidden border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 aspect-video">
 							<img src="/screenshots/digitalbanking/CodeIgniter.jpg"
 								alt="Enterprise Digital Banking Screenshot"
 								class="w-full h-full object-cover group-hover:scale-102 transition duration-300" />
 						</div>
 						<div class="p-6">
 							<div class="flex flex-col sm:flex-row justify-between items-start gap-2 mb-3">
-								<h3 class="text-xl font-bold text-slate-900">Enterprise Digital Banking Platform</h3>
+								<h3 class="text-xl font-bold text-slate-900 dark:text-white">Enterprise Digital Banking
+									Platform</h3>
 								<span
-									class="text-xs font-mono font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2.5 py-1 rounded">Enterprise
+									class="text-xs font-mono font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200/60 dark:border-emerald-800/60 px-2.5 py-1 rounded">Enterprise
 									Banking</span>
 							</div>
-							<p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-2">
+							<p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-2">
 								Digital web hub delivering accessible salary loans, pensions, and savings tools
 								nationwide with enterprise-grade stability and security.
 							</p>
@@ -385,71 +437,73 @@
 					</div>
 
 					<!-- QuoteWorx -->
-					<div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:bg-white transition shadow-2xs group"
+					<div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 transition shadow-2xs group"
 						data-aos="fade-up">
-						<div class="overflow-hidden border-b border-slate-200 bg-slate-100 aspect-video">
+						<div
+							class="overflow-hidden border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 aspect-video">
 							<img src="/screenshots/quoteworx/QuoteWorx-landing.png" alt="QuoteWorx Platform Screenshot"
 								class="w-full h-full object-cover group-hover:scale-102 transition duration-300" />
 						</div>
 						<div class="p-6">
 							<div class="flex flex-col sm:flex-row justify-between items-start gap-2 mb-3">
-								<h3 class="text-xl font-bold text-slate-900">QuoteWorx</h3>
+								<h3 class="text-xl font-bold text-slate-900 dark:text-white">QuoteWorx</h3>
 								<span
-									class="text-xs font-mono font-medium text-amber-700 bg-amber-50 border border-amber-200/60 px-2.5 py-1 rounded">Web
+									class="text-xs font-mono font-medium text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200/60 dark:border-amber-800/60 px-2.5 py-1 rounded">Web
 									& Mobile</span>
 							</div>
-							<p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+							<p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
 								A streamlined web dashboard and mobile application helping sales teams generate quotes,
 								manage client information, and receive instant notifications.
 							</p>
 							<div class="flex flex-wrap gap-1.5 mb-4">
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">Laravel</span>
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Laravel</span>
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">Vue</span>
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Vue</span>
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">Tailwind
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Tailwind
 									CSS</span>
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">MySQL</span>
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">MySQL</span>
 							</div>
 							<a href="https://www.quoteworx.com" target="_blank" rel="noopener noreferrer"
-								class="text-xs font-bold text-slate-600 hover:text-slate-800 transition inline-flex items-center gap-1">
+								class="text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition inline-flex items-center gap-1">
 								Visit Website &rarr;
 							</a>
 						</div>
 					</div>
 
 					<!-- Bookd -->
-					<div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:bg-white transition shadow-2xs group"
+					<div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 transition shadow-2xs group"
 						data-aos="fade-up">
-						<div class="overflow-hidden border-b border-slate-200 bg-slate-100 aspect-video">
+						<div
+							class="overflow-hidden border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 aspect-video">
 							<img src="/screenshots/bookd/Bookd-landing.png" alt="Bookd App Screenshot"
 								class="w-full h-full object-cover group-hover:scale-102 transition duration-300" />
 						</div>
 						<div class="p-6">
 							<div class="flex flex-col sm:flex-row justify-between items-start gap-2 mb-3">
-								<h3 class="text-xl font-bold text-slate-900">Bookd</h3>
+								<h3 class="text-xl font-bold text-slate-900 dark:text-white">Bookd</h3>
 								<span
-									class="text-xs font-mono font-medium text-purple-700 bg-purple-50 border border-purple-200/60 px-2.5 py-1 rounded">Web
+									class="text-xs font-mono font-medium text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/60 border border-purple-200/60 dark:border-purple-800/60 px-2.5 py-1 rounded">Web
 									Application</span>
 							</div>
-							<p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+							<p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
 								An online schedule management platform enabling clients and businesses to manage
 								appointments, operational calendars, and client bookings seamlessly.
 							</p>
 							<div class="flex flex-wrap gap-1.5 mb-4">
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">CodeIgniter</span>
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">CodeIgniter</span>
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">Angular.js</span>
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Angular.js</span>
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">Bootstrap</span>
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Bootstrap</span>
 								<span
-									class="px-2 py-0.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded">MySQL</span>
+									class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">MySQL</span>
 							</div>
 							<a href="https://www.bookd.online" target="_blank" rel="noopener noreferrer"
-								class="text-xs font-bold text-slate-600 hover:text-slate-800 transition inline-flex items-center gap-1">
+								class="text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition inline-flex items-center gap-1">
 								Visit Website &rarr;
 							</a>
 						</div>
@@ -458,188 +512,191 @@
 			</section>
 
 			<!-- 4. Technical Stack & Capabilities -->
-			<section id="skills" class="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-10 shadow-sm">
+			<section id="skills"
+				class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm transition-colors duration-300">
 				<div class="mb-8" data-aos="fade-up">
-					<h2 class="text-xs font-bold text-slate-600 uppercase tracking-widest mb-1">Capabilities</h2>
-					<p class="text-2xl font-extrabold text-slate-900">Technical Stack</p>
+					<h2 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-1">
+						Capabilities</h2>
+					<p class="text-2xl font-extrabold text-slate-900 dark:text-white">Technical Stack</p>
 				</div>
 
 				<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 					<!-- Backend Architecture -->
-					<div class="p-5 rounded-xl border border-slate-200/80 bg-slate-50/40 hover:border-slate-300 transition"
+					<div class="p-5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 hover:border-slate-300 dark:hover:border-slate-700 transition"
 						data-aos="fade-up">
 						<div class="flex items-center justify-between mb-4">
 							<div class="flex items-center gap-2">
-								<h3 class="font-bold text-slate-900 text-sm">Backend & APIs</h3>
+								<h3 class="font-bold text-slate-900 dark:text-white text-sm">Backend & APIs</h3>
 							</div>
 						</div>
 						<div class="flex flex-wrap gap-2">
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								PHP
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Laravel
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								CodeIgniter
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Express JS
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								MySQL
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								PostgreSQL
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Redis
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								WordPress
 							</span>
 						</div>
 					</div>
 
 					<!-- Frontend Development -->
-					<div class="p-5 rounded-xl border border-slate-200/80 bg-slate-50/40 hover:border-slate-300 transition"
+					<div class="p-5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 hover:border-slate-300 dark:hover:border-slate-700 transition"
 						data-aos="fade-up">
 						<div class="flex items-center justify-between mb-4">
 							<div class="flex items-center gap-2">
-								<h3 class="font-bold text-slate-900 text-sm">Frontend & UI</h3>
+								<h3 class="font-bold text-slate-900 dark:text-white text-sm">Frontend & UI</h3>
 							</div>
 						</div>
 						<div class="flex flex-wrap gap-2">
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Vue
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								React
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Inertia.js
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								TypeScript
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Tailwind CSS
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Vite
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								JavaScript
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								jQuery
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Bootstrap
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Vuetify
 							</span>
 						</div>
 					</div>
 
 					<!-- DevOps & Cloud Deployment -->
-					<div class="p-5 rounded-xl border border-slate-200/80 bg-slate-50/40 hover:border-slate-300 transition"
+					<div class="p-5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 hover:border-slate-300 dark:hover:border-slate-700 transition"
 						data-aos="fade-up">
 						<div class="flex items-center justify-between mb-4">
 							<div class="flex items-center gap-2">
-								<h3 class="font-bold text-slate-900 text-sm">DevOps & Cloud</h3>
+								<h3 class="font-bold text-slate-900 dark:text-white text-sm">DevOps & Cloud</h3>
 							</div>
 						</div>
 						<div class="flex flex-wrap gap-2">
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Docker
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								AWS
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								DigitalOcean
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Nginx
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Apache
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Linux
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								cPanel
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								phpMyAdmin
 							</span>
 						</div>
 					</div>
 
 					<!-- AI & Workflow Productivity -->
-					<div class="p-5 rounded-xl border border-slate-200/80 bg-slate-50/40 hover:border-slate-300 transition"
+					<div class="p-5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 hover:border-slate-300 dark:hover:border-slate-700 transition"
 						data-aos="fade-up">
 						<div class="flex items-center justify-between mb-4">
 							<div class="flex items-center gap-2">
-								<h3 class="font-bold text-slate-900 text-sm">Workflow & AI Accelerators</h3>
+								<h3 class="font-bold text-slate-900 dark:text-white text-sm">Workflow & AI Accelerators
+								</h3>
 							</div>
 						</div>
 						<div class="flex flex-wrap gap-2">
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Gemini
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								ChatGPT
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Git
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								GitHub
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								GitLab
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								Postman
 							</span>
 							<span
-								class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-2xs">
+								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">
 								JSON
 							</span>
 						</div>
@@ -648,63 +705,78 @@
 			</section>
 
 			<!-- 5. Certifications -->
-			<section id="certifications" class="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-10 shadow-sm">
+			<section id="certifications"
+				class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm transition-colors duration-300">
 				<div class="mb-8" data-aos="fade-up">
-					<h2 class="text-xs font-bold text-slate-600 uppercase tracking-widest mb-1">Credentials</h2>
-					<p class="text-2xl font-extrabold text-slate-900">Certifications & Badges</p>
+					<h2 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-1">
+						Credentials</h2>
+					<p class="text-2xl font-extrabold text-slate-900 dark:text-white">Certifications & Badges</p>
 				</div>
 
 				<div class="space-y-4">
-					<div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 flex items-start gap-4"
+					<div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 flex items-start gap-4"
 						data-aos="fade-up">
 						<img src="/ibm-badge.png" alt="IBM Software Engineering Essentials"
 							class="w-14 h-14 object-contain shrink-0" />
 						<div>
-							<h3 class="text-sm font-bold text-slate-900">Software Engineering Essentials</h3>
-							<p class="text-xs text-slate-500 mb-2">Issued by Coursera • Authorized by IBM</p>
+							<h3 class="text-sm font-bold text-slate-900 dark:text-white">Software Engineering Essentials
+							</h3>
+							<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Issued by Coursera • Authorized
+								by IBM</p>
 							<a href="https://www.credly.com/badges/347c1c30-ed44-4840-9341-b821bca692ca" target="_blank"
 								rel="noopener noreferrer"
-								class="text-xs font-semibold text-slate-600 hover:underline">Verify Credential &rarr;</a>
+								class="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:underline">Verify
+								Credential &rarr;</a>
 						</div>
 					</div>
 
-					<div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 flex items-start gap-4"
+					<div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 flex items-start gap-4"
 						data-aos="fade-up">
 						<img src="/ibm-design-thinking.png" alt="Enterprise Design Thinking Practitioner"
 							class="w-14 h-14 object-contain shrink-0" />
 						<div>
-							<h3 class="text-sm font-bold text-slate-900">Enterprise Design Thinking Practitioner</h3>
-							<p class="text-xs text-slate-500 mb-2">Issued & Authorized by IBM</p>
+							<h3 class="text-sm font-bold text-slate-900 dark:text-white">Enterprise Design Thinking
+								Practitioner</h3>
+							<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Issued & Authorized by IBM</p>
 							<a href="https://www.credly.com/badges/d2b5d673-d8ef-4491-8128-67a268434bb0" target="_blank"
 								rel="noopener noreferrer"
-								class="text-xs font-semibold text-slate-600 hover:underline">Verify Credential &rarr;</a>
+								class="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:underline">Verify
+								Credential &rarr;</a>
 						</div>
 					</div>
 				</div>
 			</section>
 
 			<!-- 6. Education -->
-			<section id="education" class="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-10 shadow-sm">
+			<section id="education"
+				class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm transition-colors duration-300">
 				<div class="mb-6" data-aos="fade-up">
-					<h2 class="text-xs font-bold text-slate-600 uppercase tracking-widest mb-1">Background</h2>
-					<p class="text-2xl font-extrabold text-slate-900">Education</p>
+					<h2 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-1">
+						Background</h2>
+					<p class="text-2xl font-extrabold text-slate-900 dark:text-white">Education</p>
 				</div>
 
-				<div class="pl-6 border-l-2 border-slate-200" data-aos="fade-up">
+				<div class="pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
 					<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
-						<h3 class="text-base font-bold text-slate-900">Bachelor of Science in Information Technology
+						<h3 class="text-base font-bold text-slate-900 dark:text-white">Bachelor of Science in
+							Information Technology
 						</h3>
-						<span class="text-xs font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded w-fit">2012 –
+						<span
+							class="text-xs font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded w-fit">2012
+							–
 							2016</span>
 					</div>
-					<p class="text-xs font-medium text-slate-700">University of Science and Technology of Southern
+					<p class="text-xs font-medium text-slate-700 dark:text-slate-300">University of Science and
+						Technology of Southern
 						Philippines (USTP)</p>
-					<p class="text-xs text-slate-500">Completed 4th-Year Level (Undergraduate Coursework)</p>
+					<p class="text-xs text-slate-500 dark:text-slate-400">Completed 4th-Year Level (Undergraduate
+						Coursework)</p>
 				</div>
 			</section>
 
 			<!-- 7. Contact CTA & Footer -->
-			<section id="contact" class="bg-slate-900 text-white rounded-2xl p-8 sm:p-12 text-center shadow-sm"
+			<section id="contact"
+				class="bg-slate-900 dark:bg-slate-900 text-white rounded-2xl p-8 sm:p-12 text-center shadow-sm border border-transparent dark:border-slate-800"
 				data-aos="fade-up">
 				<h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Get in Touch</h2>
 				<h3 class="text-2xl sm:text-3xl font-extrabold mb-4">Let's build something great together.</h3>
@@ -717,7 +789,7 @@
 				</a>
 			</section>
 
-			<footer class="text-center py-4 text-xs text-slate-400">
+			<footer class="text-center py-4 text-xs text-slate-400 dark:text-slate-500">
 				© 2016-<span id="current-year">2026</span> Pete Eldrich Taruc.
 			</footer>
 
@@ -726,7 +798,7 @@
 
 	<!-- Scroll to Top Button -->
 	<button id="scrollToTopBtn"
-		class="fixed bottom-6 right-6 z-50 flex h-11 w-11 translate-y-4 items-center justify-center rounded-full bg-slate-900 text-white opacity-0 shadow-lg transition-all duration-300 ease-in-out hover:bg-slate-800 hover:shadow-xl pointer-events-none cursor-pointer"
+		class="fixed bottom-6 right-6 z-50 flex h-11 w-11 translate-y-4 items-center justify-center rounded-full bg-slate-900 dark:bg-blue-600 text-white opacity-0 shadow-lg transition-all duration-300 ease-in-out hover:bg-slate-800 dark:hover:bg-blue-500 hover:shadow-xl pointer-events-none cursor-pointer"
 		aria-label="Scroll to top">
 		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"
 			class="h-5 w-5">
@@ -736,13 +808,15 @@
 
 	<script type="module" src="/src/main.js"></script>
 
-	<!-- Scroll to Top Script -->
+	<!-- Scripts -->
 	<script>
+		// Year auto-update
 		const yearSpan = document.getElementById('current-year');
 		if (yearSpan) {
 			yearSpan.textContent = new Date().getFullYear();
 		}
 
+		// Scroll to top functionality
 		const scrollToTopBtn = document.getElementById('scrollToTopBtn');
 		window.addEventListener('scroll', () => {
 			if (window.scrollY > 300) {
@@ -759,6 +833,35 @@
 				top: 0,
 				behavior: 'smooth'
 			});
+		});
+
+		// Dark / Light Theme Toggle Script
+		const themeToggleBtn = document.getElementById('themeToggleBtn');
+		const themeToggleSunIcon = document.getElementById('themeToggleSunIcon');
+		const themeToggleMoonIcon = document.getElementById('themeToggleMoonIcon');
+
+		function updateThemeIcons() {
+			if (document.documentElement.classList.contains('dark')) {
+				themeToggleSunIcon.classList.remove('hidden');
+				themeToggleMoonIcon.classList.add('hidden');
+			} else {
+				themeToggleMoonIcon.classList.remove('hidden');
+				themeToggleSunIcon.classList.add('hidden');
+			}
+		}
+
+		// Initial icon sync on load
+		updateThemeIcons();
+
+		themeToggleBtn.addEventListener('click', () => {
+			if (document.documentElement.classList.contains('dark')) {
+				document.documentElement.classList.remove('dark');
+				localStorage.setItem('color-theme', 'light');
+			} else {
+				document.documentElement.classList.add('dark');
+				localStorage.setItem('color-theme', 'dark');
+			}
+			updateThemeIcons();
 		});
 	</script>
 </body>
