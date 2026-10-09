@@ -1,17 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="color-scheme" content="light dark">
+	<meta name="theme-color" content="#F2F5F6">
 
 	<!-- Dark Mode Prevention Flash Script -->
 	<script>
-		if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-			document.documentElement.classList.add('dark');
-		} else {
-			document.documentElement.classList.remove('dark');
-		}
+		(function () {
+			var stored = null;
+			try { stored = localStorage.getItem('color-theme'); } catch (e) { }
+			var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (stored === 'dark' || (stored === null && prefersDark)) {
+				document.documentElement.classList.add('dark');
+			} else {
+				document.documentElement.classList.remove('dark');
+			}
+		})();
 	</script>
 
 	<!-- Primary Indexing SEO -->
@@ -41,6 +48,13 @@
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="manifest" href="/site.webmanifest">
 
+	<!-- Typography -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Onest:wght@400..700&display=swap"
+		rel="stylesheet">
+
 	<!-- Structured Data (JSON-LD) -->
 	<script type="application/ld+json">
 	{
@@ -65,671 +79,1396 @@
 		]
 	}
 	</script>
+
+	<style>
+		/* ==========================================================================
+		   Design tokens
+		   ========================================================================== */
+		:root {
+			--font-display: "Bricolage Grotesque", "Onest", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+			--font-body: "Onest", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+			--bg: #F2F5F6;
+			--surface: #FFFFFF;
+			--ink: #0E1A21;
+			--ink-2: #364852;
+			--muted: #566872;
+			--line: #DCE3E6;
+			--line-strong: #C3CED3;
+
+			--accent: #0A7771;
+			--accent-ink: #06524E;
+			--accent-soft: #E2F2F0;
+			--on-accent: #FFFFFF;
+
+			--inverse-bg: #0E1A21;
+			--inverse-ink: #F3F7F8;
+			--inverse-muted: #A9B8C1;
+			--inverse-line: transparent;
+
+			--shot-shadow: 0 1px 2px rgba(14, 26, 33, .06), 0 18px 36px -22px rgba(14, 26, 33, .35);
+		}
+
+		html.dark {
+			--bg: #080F1E;
+			--surface: #0E1829;
+			--ink: #EAF0F4;
+			--ink-2: #C2CED7;
+			--muted: #8FA0AD;
+			--line: #1B283C;
+			--line-strong: #2A3B54;
+
+			--accent: #4FD1C4;
+			--accent-ink: #7FE0D6;
+			--accent-soft: #0F2E33;
+			--on-accent: #04201D;
+
+			--inverse-bg: #0F1E30;
+			--inverse-ink: #EAF0F4;
+			--inverse-muted: #9FB0BD;
+			--inverse-line: #223550;
+
+			--shot-shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 18px 36px -22px rgba(0, 0, 0, .8);
+		}
+
+		/* ==========================================================================
+		   Base
+		   ========================================================================== */
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
+		}
+
+		html {
+			color-scheme: light;
+			-webkit-text-size-adjust: 100%;
+			scroll-padding-top: 2rem;
+		}
+
+		html.dark {
+			color-scheme: dark;
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+			html {
+				scroll-behavior: smooth;
+			}
+		}
+
+		body {
+			margin: 0;
+			background: var(--bg);
+			color: var(--ink-2);
+			font-family: var(--font-body);
+			font-size: 1rem;
+			line-height: 1.65;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			text-rendering: optimizeLegibility;
+			transition: background-color .2s ease, color .2s ease;
+		}
+
+		::selection {
+			background: var(--accent);
+			color: var(--on-accent);
+		}
+
+		a {
+			color: inherit;
+		}
+
+		:focus-visible {
+			outline: 2px solid var(--accent);
+			outline-offset: 3px;
+			border-radius: 4px;
+		}
+
+		.skip {
+			position: absolute;
+			left: 1rem;
+			top: -4rem;
+			z-index: 100;
+			padding: .6rem 1rem;
+			border-radius: 8px;
+			background: var(--ink);
+			color: var(--bg);
+			font-weight: 600;
+			font-size: .9rem;
+			text-decoration: none;
+		}
+
+		.skip:focus {
+			top: 1rem;
+		}
+
+		/* ==========================================================================
+		   Page frame
+		   ========================================================================== */
+		.site {
+			max-width: 80rem;
+			margin: 0 auto;
+			padding: 0 1.25rem;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		@media (min-width: 1024px) {
+			.site {
+				padding: 0 2rem;
+				grid-template-columns: 21.5rem minmax(0, 1fr);
+			}
+		}
+
+		/* ==========================================================================
+		   Identity rail
+		   ========================================================================== */
+		.rail {
+			display: flex;
+			flex-direction: column;
+			gap: 1.75rem;
+			padding: 1.25rem 0 2rem;
+			border-bottom: 1px solid var(--line);
+		}
+
+		@media (min-width: 1024px) {
+			.rail {
+				position: sticky;
+				top: 0;
+				height: 100vh;
+				height: 100dvh;
+				overflow-y: auto;
+				gap: 1.5rem;
+				padding: 2.5rem 2.5rem 2rem 0;
+				border-bottom: 0;
+				border-right: 1px solid var(--line);
+				scrollbar-width: thin;
+			}
+		}
+
+		.rail__top {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1rem;
+		}
+
+		.status {
+			display: inline-flex;
+			align-items: center;
+			gap: .5rem;
+			padding: .3rem .8rem;
+			border-radius: 999px;
+			background: var(--accent-soft);
+			border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+			color: var(--accent-ink);
+			font-size: .8125rem;
+			font-weight: 600;
+			line-height: 1.4;
+		}
+
+		.status__dot {
+			width: .5rem;
+			height: .5rem;
+			border-radius: 50%;
+			background: var(--accent);
+			animation: pulse 2.6s ease-out infinite;
+		}
+
+		@keyframes pulse {
+			0% {
+				box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+			}
+
+			70%,
+			100% {
+				box-shadow: 0 0 0 .5rem transparent;
+			}
+		}
+
+		.theme-toggle {
+			display: grid;
+			place-items: center;
+			width: 2.5rem;
+			height: 2.5rem;
+			padding: 0;
+			border: 1px solid var(--line-strong);
+			border-radius: 8px;
+			background: transparent;
+			color: var(--muted);
+			cursor: pointer;
+			transition: color .15s ease, border-color .15s ease, background-color .15s ease;
+		}
+
+		.theme-toggle:hover {
+			color: var(--ink);
+			border-color: var(--ink-2);
+			background: var(--surface);
+		}
+
+		.theme-toggle svg {
+			width: 1rem;
+			height: 1rem;
+		}
+
+		.icon-sun {
+			display: none;
+		}
+
+		html.dark .icon-sun {
+			display: block;
+		}
+
+		html.dark .icon-moon {
+			display: none;
+		}
+
+		.identity {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+		}
+
+		.identity__photo {
+			flex: none;
+			width: 4.5rem;
+			height: 4.5rem;
+			border-radius: 16px;
+			object-fit: cover;
+			background: var(--surface);
+			border: 1px solid var(--line-strong);
+		}
+
+		.identity h1 {
+			margin: 0;
+			font-family: var(--font-display);
+			font-size: 1.5rem;
+			font-weight: 700;
+			line-height: 1.12;
+			letter-spacing: -.02em;
+			color: var(--ink);
+			text-wrap: balance;
+		}
+
+		.identity__role {
+			margin: .35rem 0 0;
+			font-size: .9375rem;
+			font-weight: 600;
+			color: var(--ink-2);
+			line-height: 1.35;
+		}
+
+		.identity__loc {
+			margin: .1rem 0 0;
+			font-size: .875rem;
+			color: var(--muted);
+			line-height: 1.4;
+		}
+
+		.rail__bio {
+			margin: 0;
+			font-size: .9375rem;
+			line-height: 1.6;
+			color: var(--ink-2);
+			max-width: 34ch;
+		}
+
+		@media (max-width: 1023px) {
+			.rail__bio {
+				max-width: 52ch;
+			}
+		}
+
+		.contact-links {
+			display: grid;
+			gap: .25rem;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.contact-links a {
+			display: flex;
+			align-items: center;
+			gap: .75rem;
+			padding: .3rem 0;
+			font-size: .9rem;
+			font-weight: 500;
+			color: var(--ink-2);
+			text-decoration: none;
+			overflow-wrap: anywhere;
+			transition: color .15s ease;
+		}
+
+		.contact-links a:hover {
+			color: var(--accent-ink);
+			text-decoration: underline;
+			text-underline-offset: .25em;
+			text-decoration-thickness: 1px;
+		}
+
+		.contact-links svg {
+			flex: none;
+			width: 1rem;
+			height: 1rem;
+			color: var(--muted);
+		}
+
+		/* Section navigation: vertical on desktop, scrollable row on mobile */
+		.nav {
+			display: flex;
+			gap: .25rem;
+			margin: 0 -1.25rem;
+			padding: 0 1.25rem;
+			overflow-x: auto;
+			scrollbar-width: none;
+			border-bottom: 1px solid var(--line);
+		}
+
+		.nav::-webkit-scrollbar {
+			display: none;
+		}
+
+		.nav a {
+			position: relative;
+			flex: none;
+			padding: .6rem .75rem;
+			font-size: .9rem;
+			font-weight: 500;
+			color: var(--muted);
+			text-decoration: none;
+			white-space: nowrap;
+			font-variant-numeric: tabular-nums;
+			transition: color .15s ease;
+		}
+
+		.nav a::before {
+			content: "";
+			position: absolute;
+			left: .75rem;
+			right: .75rem;
+			bottom: -1px;
+			height: 2px;
+			background: transparent;
+			transition: background-color .15s ease;
+		}
+
+		.nav a:hover {
+			color: var(--ink);
+		}
+
+		.nav a[aria-current] {
+			color: var(--ink);
+		}
+
+		.nav a[aria-current]::before {
+			background: var(--accent);
+		}
+
+		@media (min-width: 1024px) {
+			.nav {
+				flex-direction: column;
+				gap: 0;
+				margin: 0;
+				padding: 0;
+				overflow: visible;
+				border-bottom: 0;
+				border-left: 1px solid var(--line);
+			}
+
+			.nav a {
+				padding: .4rem 0 .4rem 1rem;
+			}
+
+			.nav a::before {
+				left: -1px;
+				right: auto;
+				top: .3rem;
+				bottom: .3rem;
+				width: 2px;
+				height: auto;
+			}
+		}
+
+		.rail__cta {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+			gap: .625rem;
+		}
+
+		@media (min-width: 1024px) {
+			.rail__cta {
+				grid-template-columns: 1fr;
+				margin-top: auto;
+				padding-top: 1.5rem;
+				border-top: 1px solid var(--line);
+			}
+		}
+
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: .5rem;
+			min-height: 2.75rem;
+			padding: .65rem 1.1rem;
+			border: 1px solid transparent;
+			border-radius: 8px;
+			font-family: inherit;
+			font-size: .9375rem;
+			font-weight: 600;
+			line-height: 1.2;
+			text-decoration: none;
+			cursor: pointer;
+			transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+		}
+
+		.btn--primary {
+			background: var(--ink);
+			color: var(--bg);
+		}
+
+		.btn--primary:hover {
+			background: var(--accent);
+			color: var(--on-accent);
+		}
+
+		.btn--ghost {
+			background: transparent;
+			border-color: var(--line-strong);
+			color: var(--ink);
+		}
+
+		.btn--ghost:hover {
+			border-color: var(--ink);
+			background: var(--surface);
+		}
+
+		/* ==========================================================================
+		   Content stream
+		   ========================================================================== */
+		.stream {
+			min-width: 0;
+			padding: 3rem 0 3rem;
+		}
+
+		@media (min-width: 1024px) {
+			.stream {
+				max-width: 54rem;
+				padding: 5.5rem 0 4rem 4.5rem;
+			}
+		}
+
+		.section {
+			margin-top: 5rem;
+			padding-top: 3.25rem;
+			border-top: 1px solid var(--line);
+		}
+
+		.eyebrow {
+			margin: 0 0 .6rem;
+			font-size: .875rem;
+			font-weight: 600;
+			letter-spacing: .01em;
+			color: var(--accent-ink);
+		}
+
+		.stream h2 {
+			margin: 0 0 2.5rem;
+			font-family: var(--font-display);
+			font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+			font-weight: 650;
+			line-height: 1.15;
+			letter-spacing: -.022em;
+			color: var(--ink);
+			text-wrap: balance;
+		}
+
+		/* Hero */
+		.hero {
+			margin-top: 0;
+			padding-top: 0;
+			border-top: 0;
+		}
+
+		.hero .eyebrow {
+			margin-bottom: 1.25rem;
+		}
+
+		.stream .hero h2 {
+			margin: 0;
+			max-width: 14ch;
+			font-size: clamp(2.6rem, 6.4vw, 4.5rem);
+			font-weight: 700;
+			line-height: 1;
+			letter-spacing: -.04em;
+		}
+
+		.hero__lead {
+			margin: 2rem 0 0;
+			max-width: 38rem;
+			font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+			line-height: 1.7;
+			color: var(--ink-2);
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+
+			.hero .eyebrow,
+			.stream .hero h2,
+			.hero__lead {
+				animation: rise .8s cubic-bezier(.2, .7, .2, 1) both;
+			}
+
+			.stream .hero h2 {
+				animation-delay: .06s;
+			}
+
+			.hero__lead {
+				animation-delay: .14s;
+			}
+		}
+
+		@keyframes rise {
+			from {
+				opacity: 0;
+				transform: translateY(12px);
+			}
+		}
+
+		/* Experience timeline: dates are the left axis */
+		.timeline {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.job {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr);
+			gap: .5rem 2rem;
+			padding-bottom: 2.75rem;
+		}
+
+		.job:last-child {
+			padding-bottom: 0;
+		}
+
+		@media (min-width: 720px) {
+			.job {
+				grid-template-columns: 10.5rem minmax(0, 1fr);
+			}
+		}
+
+		.job__date {
+			padding-top: .2rem;
+			font-size: .875rem;
+			font-weight: 500;
+			font-variant-numeric: tabular-nums;
+			color: var(--muted);
+			white-space: nowrap;
+		}
+
+		.job__body {
+			position: relative;
+			padding-left: 1.75rem;
+			border-left: 1px solid var(--line-strong);
+		}
+
+		.job:last-child .job__body {
+			border-left-color: transparent;
+		}
+
+		.job__body::before {
+			content: "";
+			position: absolute;
+			left: -6px;
+			top: .5rem;
+			width: 11px;
+			height: 11px;
+			border-radius: 50%;
+			background: var(--bg);
+			border: 2px solid var(--line-strong);
+		}
+
+		.job:first-child .job__body::before {
+			background: var(--accent);
+			border-color: var(--accent);
+		}
+
+		.job h3 {
+			margin: 0;
+			font-family: var(--font-display);
+			font-size: 1.25rem;
+			font-weight: 600;
+			line-height: 1.3;
+			letter-spacing: -.01em;
+			color: var(--ink);
+		}
+
+		.job__co {
+			font-weight: 400;
+			color: var(--muted);
+		}
+
+		.job ul {
+			margin: .875rem 0 0;
+			padding: 0 0 0 1.1rem;
+			list-style: disc;
+		}
+
+		.job li {
+			max-width: 62ch;
+			margin-top: .45rem;
+			font-size: .9375rem;
+			line-height: 1.6;
+		}
+
+		.job li::marker {
+			color: var(--line-strong);
+		}
+
+		/* Projects */
+		.projects {
+			display: grid;
+			gap: 4.5rem;
+		}
+
+		.project__shot {
+			aspect-ratio: 16 / 10;
+			overflow: hidden;
+			border: 1px solid var(--line-strong);
+			border-radius: 12px;
+			background: var(--surface);
+			box-shadow: var(--shot-shadow);
+		}
+
+		.project__shot img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: top center;
+		}
+
+		.project__head {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
+			gap: .5rem 1rem;
+			margin-top: 1.5rem;
+		}
+
+		.project h3 {
+			margin: 0;
+			font-family: var(--font-display);
+			font-size: 1.5rem;
+			font-weight: 650;
+			line-height: 1.2;
+			letter-spacing: -.015em;
+			color: var(--ink);
+		}
+
+		.tag {
+			padding: .2rem .65rem;
+			border-radius: 999px;
+			background: var(--accent-soft);
+			color: var(--accent-ink);
+			font-size: .8125rem;
+			font-weight: 600;
+			line-height: 1.5;
+			white-space: nowrap;
+		}
+
+		.project__desc {
+			margin: .75rem 0 0;
+			max-width: 60ch;
+			font-size: 1rem;
+			line-height: 1.7;
+		}
+
+		.project .chips {
+			margin-top: 1.25rem;
+		}
+
+		.link {
+			display: inline-block;
+			margin-top: 1.25rem;
+			font-size: .9375rem;
+			font-weight: 600;
+			color: var(--accent-ink);
+			text-decoration: underline;
+			text-decoration-thickness: 1px;
+			text-underline-offset: .28em;
+			text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+			transition: text-decoration-color .15s ease;
+		}
+
+		.link:hover {
+			text-decoration-color: currentColor;
+		}
+
+		/* Chips */
+		.chips {
+			display: flex;
+			flex-wrap: wrap;
+			gap: .5rem;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.chip {
+			padding: .25rem .65rem;
+			border: 1px solid var(--line-strong);
+			border-radius: 6px;
+			background: var(--surface);
+			color: var(--ink-2);
+			font-size: .8125rem;
+			font-weight: 500;
+			line-height: 1.45;
+		}
+
+		/* Technical stack */
+		.stack__row {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr);
+			gap: .875rem 2rem;
+			padding: 1.5rem 0;
+			border-top: 1px solid var(--line);
+		}
+
+		.stack__row:first-child {
+			padding-top: 0;
+			border-top: 0;
+		}
+
+		.stack__row:last-child {
+			padding-bottom: 0;
+		}
+
+		@media (min-width: 720px) {
+			.stack__row {
+				grid-template-columns: 11rem minmax(0, 1fr);
+			}
+		}
+
+		.stack__row h3 {
+			margin: .15rem 0 0;
+			font-family: var(--font-display);
+			font-size: 1.0625rem;
+			font-weight: 600;
+			line-height: 1.3;
+			color: var(--ink);
+		}
+
+		/* Certifications */
+		.cert {
+			display: flex;
+			align-items: flex-start;
+			gap: 1.25rem;
+			padding: 1.5rem 0;
+			border-top: 1px solid var(--line);
+		}
+
+		.cert:first-child {
+			padding-top: 0;
+			border-top: 0;
+		}
+
+		.cert:last-child {
+			padding-bottom: 0;
+		}
+
+		.cert img {
+			flex: none;
+			width: 3.5rem;
+			height: 3.5rem;
+			object-fit: contain;
+			border-radius: 50%;
+		}
+
+		.cert h3 {
+			margin: 0;
+			font-family: var(--font-display);
+			font-size: 1.0625rem;
+			font-weight: 600;
+			line-height: 1.35;
+			color: var(--ink);
+		}
+
+		.cert p {
+			margin: .15rem 0 0;
+			font-size: .875rem;
+			color: var(--muted);
+		}
+
+		.cert .link {
+			margin-top: .6rem;
+			font-size: .875rem;
+		}
+
+		/* Contact */
+		.contact {
+			margin-top: 5.5rem;
+			padding: clamp(2rem, 5vw, 3.5rem);
+			border: 1px solid var(--inverse-line);
+			border-radius: 20px;
+			background: var(--inverse-bg);
+			color: var(--inverse-muted);
+		}
+
+		.contact .eyebrow {
+			color: #7FE0D6;
+		}
+
+		.stream .contact h2 {
+			margin: 0;
+			max-width: 18ch;
+			font-size: clamp(2rem, 4.6vw, 3.25rem);
+			font-weight: 700;
+			line-height: 1.04;
+			letter-spacing: -.035em;
+			color: var(--inverse-ink);
+		}
+
+		.contact__lead {
+			margin: 1.5rem 0 2rem;
+			max-width: 34rem;
+			font-size: 1.0625rem;
+			line-height: 1.65;
+		}
+
+		.btn--on-dark {
+			background: #4FD1C4;
+			color: #04201D;
+			overflow-wrap: anywhere;
+		}
+
+		.btn--on-dark:hover {
+			background: #7FE0D6;
+		}
+
+		.footer {
+			padding: 2.5rem 0 0;
+			font-size: .875rem;
+			color: var(--muted);
+		}
+
+		/* Scroll to top */
+		.to-top {
+			position: fixed;
+			right: 1.25rem;
+			bottom: 1.25rem;
+			z-index: 40;
+			display: grid;
+			place-items: center;
+			width: 2.75rem;
+			height: 2.75rem;
+			padding: 0;
+			border: 1px solid var(--line-strong);
+			border-radius: 50%;
+			background: var(--surface);
+			color: var(--ink);
+			box-shadow: 0 8px 20px -10px rgba(0, 0, 0, .4);
+			cursor: pointer;
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(8px);
+			transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s, background-color .15s ease, color .15s ease;
+		}
+
+		.to-top.is-visible {
+			opacity: 1;
+			visibility: visible;
+			transform: none;
+			transition-delay: 0s;
+		}
+
+		.to-top:hover {
+			background: var(--ink);
+			color: var(--bg);
+		}
+
+		.to-top svg {
+			width: 1.25rem;
+			height: 1.25rem;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+
+			*,
+			*::before,
+			*::after {
+				animation: none !important;
+				transition-duration: .01ms !important;
+			}
+		}
+
+		/* Print: a clean single-column resume */
+		@media print {
+
+			.rail__top,
+			.nav,
+			.rail__cta,
+			.to-top,
+			.skip {
+				display: none !important;
+			}
+
+			.site {
+				display: block;
+				padding: 0;
+			}
+
+			.rail {
+				position: static;
+				height: auto;
+				overflow: visible;
+				padding: 0 0 1.5rem;
+				border: 0;
+			}
+
+			.stream {
+				padding: 0;
+			}
+
+			.section {
+				margin-top: 2rem;
+				padding-top: 1.5rem;
+				break-inside: avoid-page;
+			}
+
+			.project,
+			.job,
+			.cert {
+				break-inside: avoid;
+			}
+
+			.project__shot {
+				box-shadow: none;
+			}
+
+			.contact {
+				border: 1px solid #999;
+				background: none;
+				color: #000;
+			}
+
+			.stream .contact h2,
+			.contact .eyebrow {
+				color: #000;
+			}
+
+			.btn--on-dark {
+				background: none;
+				color: #000;
+				padding: 0;
+			}
+		}
+	</style>
 </head>
 
-<body class="bg-white text-slate-900 dark:bg-[#0b1329] dark:text-white transition-colors duration-200">
+<body>
+	<a class="skip" href="#about">Skip to content</a>
 
-	<!-- Main Resume Wrapper Layout -->
-	<div class="max-w-7xl mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-12 gap-8 lg:p-8">
+	<div class="site">
 
-		<!-- LEFT COLUMN: Sticky Resume Sidebar Profile -->
-		<aside
-			class="lg:col-span-4 flex flex-col justify-between bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-8 lg:sticky lg:top-8 lg:h-[calc(100vh-4rem)] shadow-sm overflow-y-auto text-center transition-colors duration-300">
-			<div>
-				<!-- Theme Toggle & Header Bar -->
-				<div class="flex justify-end mb-2">
-					<button id="themeToggleBtn" type="button" aria-label="Toggle Dark Mode"
-						class="p-2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
-						<!-- Sun icon (shows in dark mode) -->
-						<svg id="themeToggleSunIcon" class="hidden w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-							<path
-								d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"
-								fill-rule="evenodd" clip-rule="evenodd"></path>
-						</svg>
-						<!-- Moon icon (shows in light mode) -->
-						<svg id="themeToggleMoonIcon" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-							<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-						</svg>
-					</button>
+		<!-- LEFT COLUMN: Sticky identity rail -->
+		<aside class="rail">
+			<div class="rail__top">
+				<div class="status">
+					<span class="status__dot" aria-hidden="true"></span>
+					Open To Work
 				</div>
 
-				<!-- Profile Avatar & Status Badge -->
-				<div class="relative group mb-6 flex flex-col items-center justify-center">
-					<div class="relative w-32 h-32 mb-4">
-						<div
-							class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-teal-600 to-slate-900 opacity-20 blur-md transition group-hover:opacity-30">
-						</div>
-						<img src="/avatar.webp" alt="Pete Eldrich Taruc"
-							class="relative w-32 h-32 object-cover rounded-2xl border-2 border-white dark:border-slate-800 shadow-md bg-slate-100 dark:bg-slate-800" />
-					</div>
-					<div
-						class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 dark:bg-teal-950/50 border border-teal-200/60 dark:border-teal-800/60 text-teal-700 dark:text-teal-400 text-xs font-semibold">
-						<span class="w-2 h-2 rounded-full bg-teal-600 dark:bg-teal-400 animate-pulse"></span>
-						Open To Work
-					</div>
+				<!-- Theme Toggle -->
+				<button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Toggle Dark Mode"
+					aria-pressed="false">
+					<!-- Sun icon (shows in dark mode) -->
+					<svg id="themeToggleSunIcon" class="icon-sun" fill="currentColor" viewBox="0 0 20 20"
+						aria-hidden="true">
+						<path
+							d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"
+							fill-rule="evenodd" clip-rule="evenodd"></path>
+					</svg>
+					<!-- Moon icon (shows in light mode) -->
+					<svg id="themeToggleMoonIcon" class="icon-moon" fill="currentColor" viewBox="0 0 20 20"
+						aria-hidden="true">
+						<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+					</svg>
+				</button>
+			</div>
+
+			<!-- Profile -->
+			<div class="identity">
+				<img class="identity__photo" src="/avatar.webp" alt="Pete Eldrich Taruc" width="144" height="144"
+					decoding="async" />
+				<div>
+					<h1>Pete Eldrich Taruc</h1>
+					<p class="identity__role">Full-Stack Engineer</p>
+					<p class="identity__loc">Cagayan de Oro City, Philippines</p>
 				</div>
+			</div>
 
-				<!-- Header Bio Info -->
-				<div class="text-center mb-6">
-					<h1 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Pete Eldrich Taruc
-					</h1>
-					<p class="text-sm font-semibold text-slate-600 dark:text-slate-400 mt-1">Full-Stack Engineer</p>
-					<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Cagayan de Oro City, Philippines</p>
-				</div>
+			<p class="rail__bio">
+				Specializes in Laravel, Vue.js, TypeScript, and Docker. Experience delivering
+				production-ready web platforms and modern frontend interfaces.
+			</p>
 
-				<p class="text-slate-600 dark:text-slate-300 text-xs leading-relaxed mb-6 text-center">
-					Specializes in Laravel, Vue.js, TypeScript, and Docker. Experience delivering
-					production-ready web platforms and modern frontend interfaces.
-				</p>
-
-				<hr class="border-slate-100 dark:border-slate-800 mb-6" />
-
-				<!-- Quick Sidebar Links -->
-				<div class="space-y-3 text-xs mb-6 flex flex-col items-center">
-					<a href="mailto:peteeldrichtaruc.dev@gmail.com"
-						class="flex items-center justify-center gap-3 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition font-medium">
-						<svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor"
-							viewBox="0 0 24 24">
+			<!-- Quick Links -->
+			<ul class="contact-links">
+				<li>
+					<a href="mailto:peteeldrichtaruc.dev@gmail.com">
+						<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 								d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
 						</svg>
 						peteeldrichtaruc.dev@gmail.com
 					</a>
-
-					<a href="https://github.com/peteeldrichtaruc-dev" target="_blank" rel="noopener noreferrer"
-						class="flex items-center justify-center gap-3 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition font-medium">
-						<svg class="w-4 h-4 text-slate-400 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+				</li>
+				<li>
+					<a href="https://github.com/peteeldrichtaruc-dev" target="_blank" rel="noopener noreferrer">
+						<svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 							<path fill-rule="evenodd" clip-rule="evenodd"
 								d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
 						</svg>
 						github.com/peteeldrichtaruc-dev
 					</a>
-				</div>
+				</li>
+			</ul>
 
-				<!-- Navigation Quick Jumps -->
-				<nav
-					class="hidden lg:flex flex-col items-center space-y-2 text-xs font-semibold text-slate-500 dark:text-slate-400 mb-6">
-					<a href="#about" class="hover:text-slate-900 dark:hover:text-white transition">01. Summary</a>
-					<a href="#experience" class="hover:text-slate-900 dark:hover:text-white transition">02.
-						Experience</a>
-					<a href="#projects" class="hover:text-slate-900 dark:hover:text-white transition">03. Projects</a>
-					<a href="#techStack" class="hover:text-slate-900 dark:hover:text-white transition">04. Tech
-						Stack</a>
-					<a href="#certifications" class="hover:text-slate-900 dark:hover:text-white transition">05.
-						Certifications</a>
-				</nav>
-			</div>
+			<!-- Section Navigation -->
+			<nav class="nav" aria-label="Sections">
+				<a href="#about" aria-current="location">01. Summary</a>
+				<a href="#experience">02. Experience</a>
+				<a href="#projects">03. Projects</a>
+				<a href="#techStack">04. Tech Stack</a>
+				<a href="#certifications">05. Certifications</a>
+			</nav>
 
-			<!-- Sidebar CTA Buttons -->
-			<div class="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-				<a href="/resume/Pete Eldrich Taruc - Resume.pdf" target="_blank" rel="noopener noreferrer"
-					class="w-full bg-slate-900 dark:bg-teal-600 hover:bg-slate-800 dark:hover:bg-teal-500 text-white py-3 rounded-lg font-semibold text-xs transition flex items-center justify-center gap-2 shadow-sm">
-					View Resume
-				</a>
-
-				<a href="#contact"
-					class="w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 py-3 rounded-lg font-semibold text-xs transition flex items-center justify-center gap-2">
-					Get in Touch
-				</a>
+			<!-- CTA Buttons -->
+			<div class="rail__cta">
+				<a class="btn btn--primary" href="/resume/Pete Eldrich Taruc - Resume.pdf" target="_blank"
+					rel="noopener noreferrer">View Resume</a>
+				<a class="btn btn--ghost" href="#contact">Get in Touch</a>
 			</div>
 		</aside>
 
-		<!-- RIGHT COLUMN: Main Resume Content Stream -->
-		<main class="lg:col-span-8 space-y-8">
+		<!-- RIGHT COLUMN: Main content stream -->
+		<main class="stream" id="main">
 
-			<!-- 1. Summary / Hero Card -->
-			<section id="about"
-				class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm transition-colors duration-300"
-				data-aos="fade-up">
-				<h2 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-2">Overview
-				</h2>
-				<h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">
-					Building Maintainable & Scalable Software.
-				</h3>
-				<p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed antialiased mb-6">
+			<!-- 1. Summary -->
+			<section id="about" class="hero" aria-labelledby="about-title">
+				<p class="eyebrow">Overview</p>
+				<h2 id="about-title">Building Maintainable &amp; Scalable Software.</h2>
+				<p class="hero__lead">
 					I leverage AI tools like Google Gemini and ChatGPT externally for architectural brainstorming and
 					troubleshooting while maintaining complete ownership over my environment.
 				</p>
 			</section>
 
 			<!-- 2. Professional Experience -->
-			<section id="experience"
-				class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm transition-colors duration-300">
-				<div class="mb-8" data-aos="fade-up">
-					<h2 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-1">
-						Career Timeline</h2>
-					<p class="text-2xl font-extrabold text-slate-900 dark:text-white">Work Experience</p>
-				</div>
+			<section id="experience" class="section" aria-labelledby="experience-title">
+				<p class="eyebrow">Career Timeline</p>
+				<h2 id="experience-title">Work Experience</h2>
 
-				<div class="space-y-10">
+				<ol class="timeline">
 					<!-- eFox Solutions Inc. -->
-					<div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
-						<div
-							class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-teal-500">
+					<li class="job">
+						<div class="job__date">Mar 2024 – Jul 2026</div>
+						<div class="job__body">
+							<h3>Full Stack Developer <span class="job__co">at eFox Solutions Inc.</span></h3>
+							<ul>
+								<li>Maintained internal web applications for core business operations.</li>
+								<li>Developed, deployed, and maintained WordPress applications for business clients.
+								</li>
+								<li>Implemented secured cPanel security strategy to prevent WordPress applications from
+									breaking unexpectedly.</li>
+							</ul>
 						</div>
-						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-							<h3 class="text-lg font-bold text-slate-900 dark:text-white">Full Stack Developer <span
-									class="text-slate-400 font-normal">at eFox Solutions Inc.</span></h3>
-							<span
-								class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded w-fit">Mar
-								2024 – Jul 2026</span>
-						</div>
-						<ul
-							class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
-							<li>
-								Maintained internal web applications for core business operations.
-							</li>
-							<li>
-								Developed, deployed, and maintained WordPress applications for business clients.
-							</li>
-							<li>
-								Implemented secured cPanel security strategy to prevent WordPress applications from
-								breaking unexpectedly.
-							</li>
-						</ul>
-					</div>
+					</li>
 
 					<!-- Questronix Corporation -->
-					<div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
-						<div
-							class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700">
+					<li class="job">
+						<div class="job__date">Sep 2022 – Mar 2024</div>
+						<div class="job__body">
+							<h3>Full Stack Developer <span class="job__co">at Questronix Corporation</span></h3>
+							<ul>
+								<li>Fixed bugs on internal applications.</li>
+								<li>Developed new features on both internal and external web applications.</li>
+								<li>Collaborated with tech leads and other software engineers developing internal SaaS
+									applications.</li>
+							</ul>
 						</div>
-						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-							<h3 class="text-lg font-bold text-slate-900 dark:text-white">Full Stack Developer <span
-									class="text-slate-400 font-normal">at Questronix Corporation</span></h3>
-							<span
-								class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded w-fit">Sep
-								2022 – Mar 2024</span>
-						</div>
-						<ul
-							class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
-							<li>
-								Fixed bugs on internal applications.
-							</li>
-							<li>
-								Developed new features on both internal and external web applications.
-							</li>
-							<li>
-								Collaborated with tech leads and other software engineers developing internal SaaS
-								applications.
-							</li>
-						</ul>
-					</div>
+					</li>
 
 					<!-- LPM Software -->
-					<div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
-						<div
-							class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700">
+					<li class="job">
+						<div class="job__date">Nov 2021 – Jul 2022</div>
+						<div class="job__body">
+							<h3>Web Developer <span class="job__co">at LPM Software</span></h3>
+							<ul>
+								<li>Rebuilt existing application.</li>
+								<li>Collaborated with other dev performing code reviews.</li>
+								<li>Studied and exercised new framework.</li>
+							</ul>
 						</div>
-						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-							<h3 class="text-lg font-bold text-slate-900 dark:text-white">Web Developer <span
-									class="text-slate-400 font-normal">at LPM Software</span></h3>
-							<span
-								class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded w-fit">Nov
-								2021 – Jul 2022</span>
-						</div>
-						<ul
-							class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
-							<li>
-								Rebuilt existing application.
-							</li>
-							<li>
-								Collaborated with other dev performing code reviews.
-							</li>
-							<li>
-								Studied and exercised new framework.
-							</li>
-						</ul>
-					</div>
+					</li>
 
 					<!-- T22 Media LLC -->
-					<div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
-						<div
-							class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700">
+					<li class="job">
+						<div class="job__date">Mar 2020 – Oct 2020</div>
+						<div class="job__body">
+							<h3>Web Developer <span class="job__co">at T22 Media LLC</span></h3>
+							<ul>
+								<li>Developed web application from frontend to backend.</li>
+								<li>Collaborated with other developers on developing more features.</li>
+							</ul>
 						</div>
-						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-							<h3 class="text-lg font-bold text-slate-900 dark:text-white">Web Developer <span
-									class="text-slate-400 font-normal">at T22 Media LLC</span></h3>
-							<span
-								class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded w-fit">Mar
-								2020 – Oct 2020</span>
-						</div>
-						<ul
-							class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
-							<li>
-								Developed web application from frontend to backend.
-							</li>
-							<li>
-								Collaborated with other developers on developing more features.
-							</li>
-						</ul>
-					</div>
+					</li>
 
 					<!-- Cloud Sea Media Group -->
-					<div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
-						<div
-							class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700">
+					<li class="job">
+						<div class="job__date">Sep 2016 – Aug 2017</div>
+						<div class="job__body">
+							<h3>Frontend Developer <span class="job__co">at Cloud Sea Media Group</span></h3>
+							<ul>
+								<li>Developed features on the frontend side.</li>
+								<li>Collaborated with other developers maintaining best practices and standards.</li>
+							</ul>
 						</div>
-						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-							<h3 class="text-lg font-bold text-slate-900 dark:text-white">Frontend Developer <span
-									class="text-slate-400 font-normal">at Cloud Sea Media Group</span></h3>
-							<span
-								class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded w-fit">Sep
-								2016 – Aug 2017</span>
-						</div>
-						<ul
-							class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
-							<li>
-								Developed features on the frontend side.
-							</li>
-							<li>
-								Collaborated with other developers maintaining best practices and standards.
-							</li>
-						</ul>
-					</div>
+					</li>
 
 					<!-- Winged Media -->
-					<div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800" data-aos="fade-up">
-						<div
-							class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700">
+					<li class="job">
+						<div class="job__date">Sep 2016 – Nov 2016</div>
+						<div class="job__body">
+							<h3>Junior Web Developer <span class="job__co">at Winged Media</span></h3>
+							<ul>
+								<li>Developed features on existing web applications.</li>
+							</ul>
 						</div>
-						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-							<h3 class="text-lg font-bold text-slate-900 dark:text-white">Junior Web Developer <span
-									class="text-slate-400 font-normal">at Winged Media</span></h3>
-							<span
-								class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded w-fit">Sep
-								2016 – Nov 2016</span>
-						</div>
-						<ul
-							class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm space-y-2 mt-3 list-disc list-inside">
-							<li>
-								Developed features on existing web applications.
-							</li>
-						</ul>
-					</div>
-				</div>
+					</li>
+				</ol>
 			</section>
 
-			<!-- 3. Featured Projects with Screenshots -->
-			<section id="projects"
-				class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm transition-colors duration-300">
-				<div class="mb-8" data-aos="fade-up">
-					<h2 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-1">
-						Portfolio</h2>
-					<p class="text-2xl font-extrabold text-slate-900 dark:text-white">Featured Projects</p>
-				</div>
+			<!-- 3. Featured Projects -->
+			<section id="projects" class="section" aria-labelledby="projects-title">
+				<p class="eyebrow">Portfolio</p>
+				<h2 id="projects-title">Featured Projects</h2>
 
-				<div class="space-y-6">
+				<div class="projects">
 					<!-- RoomsForRent SaaS -->
-					<div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 transition shadow-2xs group"
-						data-aos="fade-up">
-						<div class="grid grid-cols-1 md:grid-cols-12 items-center">
-							<div
-								class="md:col-span-5 overflow-hidden border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 aspect-video flex items-center justify-center p-2">
-								<img src="/screenshots/roomsforrent/RoomsForRent-dashboard.png"
-									alt="RoomsForRent Dashboard Screenshot"
-									class="w-full h-full object-contain group-hover:scale-102 transition duration-300 rounded" />
-							</div>
-							<div class="md:col-span-7 p-6 flex flex-col justify-between">
-								<div>
-									<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-										<h3 class="text-xl font-bold text-slate-900 dark:text-white">RoomsForRent</h3>
-										<span
-											class="text-xs font-mono font-medium text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-950/60 border border-slate-200/60 dark:border-slate-800/60 px-2.5 py-1 rounded w-fit">Multi-Tenant
-											SaaS</span>
-									</div>
-									<p
-										class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
-										A multi-tenant property management platform engineered for boarding houses.
-										Features
-										live occupancy tracking, automated Stripe invoicing, and optimized database
-										queries.
-									</p>
-								</div>
-								<div>
-									<div class="flex flex-wrap gap-1.5 mb-4">
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Laravel
-											13</span>
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Inertia.js</span>
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">React</span>
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">TypeScript</span>
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Docker</span>
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Stripe</span>
-									</div>
-								</div>
-								<a href="https://github.com/peteeldrichtaruc-dev/rooms-for-rent" target="_blank"
-									rel="noopener noreferrer"
-									class="text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition inline-flex items-center gap-1">
-									Visit GitHub Repository &rarr;
-								</a>
-							</div>
+					<article class="project">
+						<div class="project__shot">
+							<img src="/screenshots/roomsforrent/RoomsForRent-dashboard.png"
+								alt="RoomsForRent Dashboard Screenshot" loading="lazy" decoding="async" />
 						</div>
-					</div>
+						<div class="project__head">
+							<h3>RoomsForRent</h3>
+							<span class="tag">Multi-Tenant SaaS</span>
+						</div>
+						<p class="project__desc">
+							A multi-tenant property management platform engineered for boarding houses.
+							Features live occupancy tracking, automated Stripe invoicing, and optimized database
+							queries.
+						</p>
+						<ul class="chips">
+							<li class="chip">Laravel 13</li>
+							<li class="chip">Inertia.js</li>
+							<li class="chip">React</li>
+							<li class="chip">TypeScript</li>
+							<li class="chip">Docker</li>
+							<li class="chip">Stripe</li>
+						</ul>
+						<a class="link" href="https://github.com/peteeldrichtaruc-dev/rooms-for-rent" target="_blank"
+							rel="noopener noreferrer">Visit GitHub Repository &rarr;</a>
+					</article>
 
 					<!-- Enterprise Digital Banking Platform -->
-					<div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 transition shadow-2xs group"
-						data-aos="fade-up">
-						<div class="grid grid-cols-1 md:grid-cols-12 items-center">
-							<div
-								class="md:col-span-5 overflow-hidden border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 aspect-video flex items-center justify-center p-2">
-								<img src="/screenshots/digitalbanking/CodeIgniter.jpg"
-									alt="Enterprise Digital Banking Screenshot"
-									class="w-full h-full object-contain group-hover:scale-102 transition duration-300 rounded" />
-							</div>
-							<div class="md:col-span-7 p-6 flex flex-col justify-between">
-								<div>
-									<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-										<h3 class="text-xl font-bold text-slate-900 dark:text-white">Enterprise Digital
-											Banking Platform</h3>
-										<span
-											class="text-xs font-mono font-medium text-slate-700 dark:text-slate-400 bg-slate-50 dark:bg-slate-950/60 border border-slate-200/60 dark:border-slate-800/60 px-2.5 py-1 rounded w-fit">Enterprise
-											Banking</span>
-									</div>
-									<p
-										class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-2">
-										Digital web hub delivering accessible salary loans, pensions, and savings tools
-										nationwide with enterprise-grade stability and security.
-									</p>
-								</div>
-							</div>
+					<article class="project">
+						<div class="project__shot">
+							<img src="/screenshots/digitalbanking/CodeIgniter.jpg"
+								alt="Enterprise Digital Banking Screenshot" loading="lazy" decoding="async" />
 						</div>
-					</div>
+						<div class="project__head">
+							<h3>Enterprise Digital Banking Platform</h3>
+							<span class="tag">Enterprise Banking</span>
+						</div>
+						<p class="project__desc">
+							Digital web hub delivering accessible salary loans, pensions, and savings tools
+							nationwide with enterprise-grade stability and security.
+						</p>
+					</article>
 
 					<!-- QuoteWorx -->
-					<div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 transition shadow-2xs group"
-						data-aos="fade-up">
-						<div class="grid grid-cols-1 md:grid-cols-12 items-center">
-							<div
-								class="md:col-span-5 overflow-hidden border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 aspect-video flex items-center justify-center p-2">
-								<img src="/screenshots/quoteworx/QuoteWorx-landing.png"
-									alt="QuoteWorx Platform Screenshot"
-									class="w-full h-full object-contain group-hover:scale-102 transition duration-300 rounded" />
-							</div>
-							<div class="md:col-span-7 p-6 flex flex-col justify-between">
-								<div>
-									<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-										<h3 class="text-xl font-bold text-slate-900 dark:text-white">QuoteWorx</h3>
-										<span
-											class="text-xs font-mono font-medium text-slate-700 dark:text-slate-400 bg-slate-50 dark:bg-slate-950/60 border border-slate-200/60 dark:border-slate-800/60 px-2.5 py-1 rounded w-fit">Web
-											& Mobile</span>
-									</div>
-									<p
-										class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
-										A streamlined web dashboard and mobile application helping sales teams generate
-										quotes,
-										manage client information, and receive instant notifications.
-									</p>
-								</div>
-								<div>
-									<div class="flex flex-wrap gap-1.5 mb-4">
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Laravel</span>
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Vue</span>
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Tailwind
-											CSS</span>
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">MySQL</span>
-									</div>
-									<a href="https://www.quoteworx.com" target="_blank" rel="noopener noreferrer"
-										class="text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition inline-flex items-center gap-1">
-										Visit Website &rarr;
-									</a>
-								</div>
-							</div>
+					<article class="project">
+						<div class="project__shot">
+							<img src="/screenshots/quoteworx/QuoteWorx-landing.png" alt="QuoteWorx Platform Screenshot"
+								loading="lazy" decoding="async" />
 						</div>
-					</div>
+						<div class="project__head">
+							<h3>QuoteWorx</h3>
+							<span class="tag">Web &amp; Mobile</span>
+						</div>
+						<p class="project__desc">
+							A streamlined web dashboard and mobile application helping sales teams generate
+							quotes, manage client information, and receive instant notifications.
+						</p>
+						<ul class="chips">
+							<li class="chip">Laravel</li>
+							<li class="chip">Vue</li>
+							<li class="chip">Tailwind CSS</li>
+							<li class="chip">MySQL</li>
+						</ul>
+						<a class="link" href="https://www.quoteworx.com" target="_blank" rel="noopener noreferrer">Visit
+							Website &rarr;</a>
+					</article>
 
 					<!-- Bookd -->
-					<div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 transition shadow-2xs group"
-						data-aos="fade-up">
-						<div class="grid grid-cols-1 md:grid-cols-12 items-center">
-							<div
-								class="md:col-span-5 overflow-hidden border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 aspect-video flex items-center justify-center p-2">
-								<img src="/screenshots/bookd/Bookd-landing.png" alt="Bookd App Screenshot"
-									class="w-full h-full object-contain group-hover:scale-102 transition duration-300 rounded" />
-							</div>
-							<div class="md:col-span-7 p-6 flex flex-col justify-between">
-								<div>
-									<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-										<h3 class="text-xl font-bold text-slate-900 dark:text-white">Bookd</h3>
-										<span
-											class="text-xs font-mono font-medium text-slate-700 dark:text-slate-400 bg-slate-50 dark:bg-slate-950/60 border border-slate-200/60 dark:border-slate-800/60 px-2.5 py-1 rounded w-fit">Web
-											Application</span>
-									</div>
-									<p
-										class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
-										An online schedule management platform enabling clients and businesses to manage
-										appointments, operational calendars, and client bookings seamlessly.
-									</p>
-								</div>
-								<div>
-									<div class="flex flex-wrap gap-1.5 mb-4">
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">CodeIgniter</span>
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Angular.js</span>
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">Bootstrap</span>
-										<span
-											class="px-2 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded">MySQL</span>
-									</div>
-									<a href="https://www.bookd.online" target="_blank" rel="noopener noreferrer"
-										class="text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition inline-flex items-center gap-1">
-										Visit Website &rarr;
-									</a>
-								</div>
-							</div>
+					<article class="project">
+						<div class="project__shot">
+							<img src="/screenshots/bookd/Bookd-landing.png" alt="Bookd App Screenshot" loading="lazy"
+								decoding="async" />
 						</div>
-					</div>
+						<div class="project__head">
+							<h3>Bookd</h3>
+							<span class="tag">Web Application</span>
+						</div>
+						<p class="project__desc">
+							An online schedule management platform enabling clients and businesses to manage
+							appointments, operational calendars, and client bookings seamlessly.
+						</p>
+						<ul class="chips">
+							<li class="chip">CodeIgniter</li>
+							<li class="chip">Angular.js</li>
+							<li class="chip">Bootstrap</li>
+							<li class="chip">MySQL</li>
+						</ul>
+						<a class="link" href="https://www.bookd.online" target="_blank" rel="noopener noreferrer">Visit
+							Website &rarr;</a>
+					</article>
 				</div>
 			</section>
 
 			<!-- 4. Technical Stack & Capabilities -->
-			<section id="techStack"
-				class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm transition-colors duration-300">
-				<div class="mb-8" data-aos="fade-up">
-					<h2 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-1">
-						Capabilities</h2>
-					<p class="text-2xl font-extrabold text-slate-900 dark:text-white">Technical Stack</p>
-				</div>
+			<section id="techStack" class="section" aria-labelledby="stack-title">
+				<p class="eyebrow">Capabilities</p>
+				<h2 id="stack-title">Technical Stack</h2>
 
-				<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+				<div class="stack">
 					<!-- Backend Architecture -->
-					<div class="p-5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 hover:border-slate-300 dark:hover:border-slate-700 transition"
-						data-aos="fade-up">
-						<div class="flex items-center justify-between mb-4">
-							<div class="flex items-center gap-2">
-								<h3 class="font-bold text-slate-900 dark:text-white text-sm">Backend & APIs</h3>
-							</div>
-						</div>
-						<div class="flex flex-wrap gap-2">
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">PHP</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Laravel</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">CodeIgniter</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Express
-								JS</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">MySQL</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">PostgreSQL</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Redis</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">WordPress</span>
-						</div>
+					<div class="stack__row">
+						<h3>Backend &amp; APIs</h3>
+						<ul class="chips">
+							<li class="chip">PHP</li>
+							<li class="chip">Laravel</li>
+							<li class="chip">CodeIgniter</li>
+							<li class="chip">Express JS</li>
+							<li class="chip">MySQL</li>
+							<li class="chip">PostgreSQL</li>
+							<li class="chip">Redis</li>
+							<li class="chip">WordPress</li>
+						</ul>
 					</div>
 
 					<!-- Frontend Development -->
-					<div class="p-5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 hover:border-slate-300 dark:hover:border-slate-700 transition"
-						data-aos="fade-up">
-						<div class="flex items-center justify-between mb-4">
-							<div class="flex items-center gap-2">
-								<h3 class="font-bold text-slate-900 dark:text-white text-sm">Frontend & UI</h3>
-							</div>
-						</div>
-						<div class="flex flex-wrap gap-2">
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Vue</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">React</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Inertia.js</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">TypeScript</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Tailwind
-								CSS</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Vite</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">JavaScript</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">jQuery</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Bootstrap</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Vuetify</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">SEO</span>
-						</div>
+					<div class="stack__row">
+						<h3>Frontend &amp; UI</h3>
+						<ul class="chips">
+							<li class="chip">Vue</li>
+							<li class="chip">React</li>
+							<li class="chip">Inertia.js</li>
+							<li class="chip">TypeScript</li>
+							<li class="chip">Tailwind CSS</li>
+							<li class="chip">Vite</li>
+							<li class="chip">JavaScript</li>
+							<li class="chip">jQuery</li>
+							<li class="chip">Bootstrap</li>
+							<li class="chip">Vuetify</li>
+							<li class="chip">SEO</li>
+						</ul>
 					</div>
 
 					<!-- DevOps & Cloud Deployment -->
-					<div class="p-5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 hover:border-slate-300 dark:hover:border-slate-700 transition"
-						data-aos="fade-up">
-						<div class="flex items-center justify-between mb-4">
-							<div class="flex items-center gap-2">
-								<h3 class="font-bold text-slate-900 dark:text-white text-sm">DevOps & Cloud</h3>
-							</div>
-						</div>
-						<div class="flex flex-wrap gap-2">
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Docker</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">AWS</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">DigitalOcean</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Nginx</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Apache</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Linux</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">cPanel</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">phpMyAdmin</span>
-						</div>
+					<div class="stack__row">
+						<h3>DevOps &amp; Cloud</h3>
+						<ul class="chips">
+							<li class="chip">Docker</li>
+							<li class="chip">AWS</li>
+							<li class="chip">DigitalOcean</li>
+							<li class="chip">Nginx</li>
+							<li class="chip">Apache</li>
+							<li class="chip">Linux</li>
+							<li class="chip">cPanel</li>
+							<li class="chip">phpMyAdmin</li>
+						</ul>
 					</div>
 
 					<!-- Workflow, AI & Engineering Practices -->
-					<div class="p-5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 hover:border-slate-300 dark:hover:border-slate-700 transition"
-						data-aos="fade-up">
-						<div class="flex items-center justify-between mb-4">
-							<div class="flex items-center gap-2">
-								<h3 class="font-bold text-slate-900 dark:text-white text-sm">Workflow, AI & Practices
-								</h3>
-							</div>
-						</div>
-						<div class="flex flex-wrap gap-2">
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Code
-								Review</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Refactoring</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Defensive
-								Programming</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Gemini</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">ChatGPT</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Git</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">GitHub</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">GitLab</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">Postman</span>
-							<span
-								class="px-2.5 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs">JSON</span>
-						</div>
+					<div class="stack__row">
+						<h3>Workflow, AI &amp; Practices</h3>
+						<ul class="chips">
+							<li class="chip">Code Review</li>
+							<li class="chip">Refactoring</li>
+							<li class="chip">Defensive Programming</li>
+							<li class="chip">Gemini</li>
+							<li class="chip">ChatGPT</li>
+							<li class="chip">Git</li>
+							<li class="chip">GitHub</li>
+							<li class="chip">GitLab</li>
+							<li class="chip">Postman</li>
+							<li class="chip">JSON</li>
+						</ul>
 					</div>
 				</div>
 			</section>
 
 			<!-- 5. Certifications -->
-			<section id="certifications"
-				class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 sm:p-10 shadow-sm transition-colors duration-300">
-				<div class="mb-8" data-aos="fade-up">
-					<h2 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest mb-1">
-						Credentials</h2>
-					<p class="text-2xl font-extrabold text-slate-900 dark:text-white">Certifications & Badges</p>
-				</div>
+			<section id="certifications" class="section" aria-labelledby="certs-title">
+				<p class="eyebrow">Credentials</p>
+				<h2 id="certs-title">Certifications &amp; Badges</h2>
 
-				<div class="space-y-4">
-					<div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 flex items-start gap-4"
-						data-aos="fade-up">
-						<img src="/ibm-badge.png" alt="IBM Software Engineering Essentials"
-							class="w-14 h-14 object-contain rounded-full shrink-0" />
+				<div>
+					<div class="cert">
+						<img src="/ibm-badge.png" alt="IBM Software Engineering Essentials" loading="lazy"
+							decoding="async" />
 						<div>
-							<h3 class="text-sm font-bold text-slate-900 dark:text-white">Software Engineering Essentials
-							</h3>
-							<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Issued by Coursera • Authorized
-								by IBM</p>
-							<a href="https://www.credly.com/badges/347c1c30-ed44-4840-9341-b821bca692ca" target="_blank"
-								rel="noopener noreferrer"
-								class="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:underline">Verify
-								Credential &rarr;</a>
+							<h3>Software Engineering Essentials</h3>
+							<p>Issued by Coursera • Authorized by IBM</p>
+							<a class="link" href="https://www.credly.com/badges/347c1c30-ed44-4840-9341-b821bca692ca"
+								target="_blank" rel="noopener noreferrer">Verify Credential &rarr;</a>
 						</div>
 					</div>
 
-					<div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 flex items-start gap-4"
-						data-aos="fade-up">
-						<img src="/ibm-design-thinking.png" alt="Enterprise Design Thinking Practitioner"
-							class="w-14 h-14 object-contain rounded-full shrink-0" />
+					<div class="cert">
+						<img src="/ibm-design-thinking.png" alt="Enterprise Design Thinking Practitioner" loading="lazy"
+							decoding="async" />
 						<div>
-							<h3 class="text-sm font-bold text-slate-900 dark:text-white">Enterprise Design Thinking
-								Practitioner</h3>
-							<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Issued & Authorized by IBM</p>
-							<a href="https://www.credly.com/badges/d2b5d673-d8ef-4491-8128-67a268434bb0" target="_blank"
-								rel="noopener noreferrer"
-								class="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:underline">Verify
-								Credential &rarr;</a>
+							<h3>Enterprise Design Thinking Practitioner</h3>
+							<p>Issued &amp; Authorized by IBM</p>
+							<a class="link" href="https://www.credly.com/badges/d2b5d673-d8ef-4491-8128-67a268434bb0"
+								target="_blank" rel="noopener noreferrer">Verify Credential &rarr;</a>
 						</div>
 					</div>
 				</div>
 			</section>
 
-			<!-- 6. Contact CTA & Footer -->
-			<section id="contact"
-				class="bg-slate-900 dark:bg-slate-900 text-white rounded-2xl p-8 sm:p-12 text-center shadow-sm border border-transparent dark:border-slate-800"
-				data-aos="fade-up">
-				<h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Get in Touch</h2>
-				<h3 class="text-2xl sm:text-3xl font-extrabold mb-4">Let's build something great together.</h3>
-				<p class="text-slate-400 text-xs sm:text-sm max-w-md mx-auto mb-8">
+			<!-- 6. Contact & Footer -->
+			<section id="contact" class="contact" aria-labelledby="contact-title">
+				<p class="eyebrow">Get in Touch</p>
+				<h2 id="contact-title">Let's build something great together.</h2>
+				<p class="contact__lead">
 					Open for full-stack engineering roles, SaaS development, and technical consulting.
 				</p>
-				<a href="mailto:peteeldrichtaruc.dev@gmail.com"
-					class="inline-block bg-white text-slate-900 px-6 py-3 rounded-lg font-bold text-xs hover:bg-slate-100 transition shadow-sm">
+				<a class="btn btn--on-dark" href="mailto:peteeldrichtaruc.dev@gmail.com">
 					peteeldrichtaruc.dev@gmail.com
 				</a>
 			</section>
 
-			<footer class="text-center py-4 text-xs text-slate-400 dark:text-slate-500">
+			<footer class="footer">
 				© 2016-<span id="current-year">2026</span> Pete Eldrich Taruc.
 			</footer>
 
@@ -737,11 +1476,9 @@
 	</div>
 
 	<!-- Scroll to Top Button -->
-	<button id="scrollToTopBtn"
-		class="fixed bottom-6 right-6 z-50 flex h-11 w-11 translate-y-4 items-center justify-center rounded-full bg-slate-900 dark:bg-teal-600 text-white opacity-0 shadow-lg transition-all duration-300 ease-in-out hover:bg-slate-800 dark:hover:bg-teal-500 hover:shadow-xl pointer-events-none cursor-pointer"
-		aria-label="Scroll to top">
+	<button id="scrollToTopBtn" class="to-top" type="button" aria-label="Scroll to top">
 		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"
-			class="h-5 w-5">
+			aria-hidden="true">
 			<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
 		</svg>
 	</button>
@@ -750,59 +1487,64 @@
 
 	<!-- Scripts -->
 	<script>
-		// Year auto-update
-		const yearSpan = document.getElementById('current-year');
-		if (yearSpan) {
-			yearSpan.textContent = new Date().getFullYear();
-		}
+		(function () {
+			var root = document.documentElement;
+			var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-		// Scroll to top functionality
-		const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-		window.addEventListener('scroll', () => {
-			if (window.scrollY > 300) {
-				scrollToTopBtn.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
-				scrollToTopBtn.classList.add('opacity-100', 'translate-y-0');
-			} else {
-				scrollToTopBtn.classList.remove('opacity-100', 'translate-y-0');
-				scrollToTopBtn.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+			// Year auto-update
+			var yearSpan = document.getElementById('current-year');
+			if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+			// Scroll to top
+			var toTop = document.getElementById('scrollToTopBtn');
+			var ticking = false;
+			function syncToTop() {
+				toTop.classList.toggle('is-visible', window.scrollY > 300);
+				ticking = false;
 			}
-		});
-
-		scrollToTopBtn.addEventListener('click', () => {
-			window.scrollTo({
-				top: 0,
-				behavior: 'smooth'
+			window.addEventListener('scroll', function () {
+				if (!ticking) { ticking = true; window.requestAnimationFrame(syncToTop); }
+			}, { passive: true });
+			syncToTop();
+			toTop.addEventListener('click', function () {
+				window.scrollTo({ top: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
 			});
-		});
 
-		// Dark / Light Theme Toggle Script
-		const themeToggleBtn = document.getElementById('themeToggleBtn');
-		const themeToggleSunIcon = document.getElementById('themeToggleSunIcon');
-		const themeToggleMoonIcon = document.getElementById('themeToggleMoonIcon');
-
-		function updateThemeIcons() {
-			if (document.documentElement.classList.contains('dark')) {
-				themeToggleSunIcon.classList.remove('hidden');
-				themeToggleMoonIcon.classList.add('hidden');
-			} else {
-				themeToggleMoonIcon.classList.remove('hidden');
-				themeToggleSunIcon.classList.add('hidden');
+			// Dark / Light theme toggle
+			var themeBtn = document.getElementById('themeToggleBtn');
+			var themeMeta = document.querySelector('meta[name="theme-color"]');
+			function syncTheme() {
+				var isDark = root.classList.contains('dark');
+				themeBtn.setAttribute('aria-pressed', String(isDark));
+				if (themeMeta) themeMeta.setAttribute('content', isDark ? '#080F1E' : '#F2F5F6');
 			}
-		}
+			syncTheme();
+			themeBtn.addEventListener('click', function () {
+				var goDark = !root.classList.contains('dark');
+				root.classList.toggle('dark', goDark);
+				try { localStorage.setItem('color-theme', goDark ? 'dark' : 'light'); } catch (e) { }
+				syncTheme();
+			});
 
-		// Initial icon sync on load
-		updateThemeIcons();
-
-		themeToggleBtn.addEventListener('click', () => {
-			if (document.documentElement.classList.contains('dark')) {
-				document.documentElement.classList.remove('dark');
-				localStorage.setItem('color-theme', 'light');
-			} else {
-				document.documentElement.classList.add('dark');
-				localStorage.setItem('color-theme', 'dark');
+			// Scroll-spy for the section navigation
+			if ('IntersectionObserver' in window) {
+				var links = {};
+				document.querySelectorAll('.nav a[href^="#"]').forEach(function (a) {
+					links[a.getAttribute('href').slice(1)] = a;
+				});
+				var observer = new IntersectionObserver(function (entries) {
+					entries.forEach(function (entry) {
+						if (!entry.isIntersecting || !links[entry.target.id]) return;
+						Object.keys(links).forEach(function (id) { links[id].removeAttribute('aria-current'); });
+						links[entry.target.id].setAttribute('aria-current', 'location');
+					});
+				}, { rootMargin: '-30% 0px -60% 0px' });
+				Object.keys(links).forEach(function (id) {
+					var section = document.getElementById(id);
+					if (section) observer.observe(section);
+				});
 			}
-			updateThemeIcons();
-		});
+		})();
 	</script>
 </body>
 
