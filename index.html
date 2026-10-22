@@ -15,6 +15,8 @@
 			var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 			if (stored === 'dark' || (stored === null && prefersDark)) {
 				document.documentElement.classList.add('dark');
+				var m = document.querySelector('meta[name="theme-color"]');
+				if (m) m.setAttribute('content', '#080F1E');
 			} else {
 				document.documentElement.classList.remove('dark');
 			}
@@ -37,7 +39,12 @@
 	<meta property="og:title" content="Pete Eldrich Taruc | Full-Stack Engineer">
 	<meta property="og:description"
 		content="Specializing in scaling robust web apps using Laravel, Vue.js, TypeScript, and Docker.">
-	<meta property="og:image" content="/screenshots/roomsforrent/RoomsForRent-dashboard.png">
+	<meta property="og:image" content="https://peteeldrichtaruc.dev/screenshots/roomsforrent/RoomsForRent-dashboard.png">
+	<meta property="og:site_name" content="Pete Eldrich Taruc">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Pete Eldrich Taruc | Full-Stack Engineer">
+	<meta name="twitter:image" content="https://peteeldrichtaruc.dev/screenshots/roomsforrent/RoomsForRent-dashboard.png">
+	<link rel="canonical" href="https://peteeldrichtaruc.dev/">
 
 	<!-- Google Search & Desktop Browser Favicon Engine -->
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -52,7 +59,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link
-		href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Onest:wght@400..700&display=swap"
+		href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500..700&family=Onest:wght@400..700&display=swap"
 		rel="stylesheet">
 
 	<!-- Structured Data (JSON-LD) -->
@@ -565,6 +572,11 @@
 			border-top: 1px solid var(--line);
 		}
 
+		.section {
+			content-visibility: auto;
+			contain-intrinsic-size: auto 40rem;
+		}
+
 		.eyebrow {
 			margin: 0 0 .6rem;
 			font-size: .875rem;
@@ -734,21 +746,21 @@
 			gap: 4.5rem;
 		}
 
+		/* Screenshots render at their natural aspect ratio: nothing is cropped or zoomed */
 		.project__shot {
-			aspect-ratio: 16 / 10;
-			overflow: hidden;
 			border: 1px solid var(--line-strong);
 			border-radius: 12px;
 			background: var(--surface);
 			box-shadow: var(--shot-shadow);
+			overflow: hidden; /* only clips the rounded corners */
 		}
 
 		.project__shot img {
 			display: block;
 			width: 100%;
-			height: 100%;
-			object-fit: cover;
-			object-position: top center;
+			height: auto;
+			max-width: 100%;
+			object-fit: contain;
 		}
 
 		.project__head {
@@ -1104,7 +1116,7 @@
 			<!-- Profile -->
 			<div class="identity">
 				<img class="identity__photo" src="/avatar.webp" alt="Pete Eldrich Taruc" width="144" height="144"
-					decoding="async" />
+					fetchpriority="high" decoding="async" />
 				<div>
 					<h1>Pete Eldrich Taruc</h1>
 					<p class="identity__role">Full-Stack Engineer</p>
@@ -1152,7 +1164,7 @@
 			<!-- 1. Summary -->
 			<section id="about" class="hero" aria-labelledby="about-title">
 				<p class="eyebrow">Overview</p>
-				<h2 id="about-title">Building Maintainable & Scalable Software.</h2>
+				<h2 id="about-title">Building Maintainable &amp; Scalable Software.</h2>
 				<p class="hero__lead">
 					I leverage AI tools externally for architectural brainstorming and
 					troubleshooting while maintaining complete ownership over my environment.
@@ -1250,6 +1262,34 @@
 				<h2 id="projects-title">Featured Projects</h2>
 
 				<div class="projects">
+					<!-- Arkila -->
+					<article class="project">
+						<div class="project__shot">
+							<img src="/screenshots/arkila/Arkila-landing.png" alt="Arkila Platform Screenshot"
+								loading="lazy" decoding="async" />
+						</div>
+						<div class="project__head">
+							<h3>Arkila</h3>
+							<span class="tag">Web Application</span>
+						</div>
+						<p class="project__desc">
+							A vehicle rental directory connecting tourists directly with verified local shops that also comes up with permanent listing one-time vehicle slot purchases. Zero commission, direct owner contact.						
+						</p>
+						<ul class="chips">
+							<li class="chip">WordPress (Custom Arkila Theme)</li>
+							<li class="chip">Tailwind CSS</li>
+							<li class="chip">MariaDB</li>
+							<li class="chip">Nginx</li>
+							<li class="chip">phpMyAdmin</li>
+							<li class="chip">Redis</li>
+							<li class="chip">Docker</li>
+							<li class="chip">Google Gemini</li>
+							<li class="chip">Claude</li>
+							<li class="chip">Twilio</li>
+							<li class="chip">PayMongo</li>
+						</ul>
+					</article>
+
 					<!-- QuoteWorx -->
 					<article class="project">
 						<div class="project__shot">
@@ -1258,7 +1298,7 @@
 						</div>
 						<div class="project__head">
 							<h3>QuoteWorx</h3>
-							<span class="tag">Web &amp; Mobile</span>
+							<span class="tag">Web &amp; Mobile Application</span>
 						</div>
 						<p class="project__desc">
 							A streamlined web dashboard and mobile application helping sales teams generate
@@ -1382,7 +1422,7 @@
 
 				<div>
 					<div class="cert">
-						<img src="/ibm-badge.png" alt="IBM Software Engineering Essentials" loading="lazy"
+						<img src="/ibm-badge.png" alt="IBM Software Engineering Essentials" width="56" height="56" loading="lazy"
 							decoding="async" />
 						<div>
 							<h3>Software Engineering Essentials</h3>
@@ -1393,7 +1433,7 @@
 					</div>
 
 					<div class="cert">
-						<img src="/ibm-design-thinking.png" alt="Enterprise Design Thinking Practitioner" loading="lazy"
+						<img src="/ibm-design-thinking.png" alt="Enterprise Design Thinking Practitioner" width="56" height="56" loading="lazy"
 							decoding="async" />
 						<div>
 							<h3>Enterprise Design Thinking Practitioner</h3>
