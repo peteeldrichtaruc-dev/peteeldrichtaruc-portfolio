@@ -10,6 +10,7 @@
 	<!-- Dark Mode Prevention Flash Script -->
 	<script>
 		(function () {
+			document.documentElement.classList.add('js');
 			var stored = null;
 			try { stored = localStorage.getItem('color-theme'); } catch (e) { }
 			var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -26,7 +27,7 @@
 	<!-- Primary Indexing SEO -->
 	<title>Pete Eldrich Taruc | Full-Stack Engineer</title>
 	<meta name="description"
-		content="Pete Eldrich Taruc: Full-Stack Engineer with 5+ years building maintainable, secure, stable web apps with Laravel, Vue.js, TypeScript &amp; Docker. Open to work.">
+		content="Pete Eldrich Taruc: Full-Stack Engineer with 5+ years building maintainable, secure, and stable software. Open to work.">
 	<meta name="keywords"
 		content="Pete Eldrich Taruc, Pete Taruc, Full-Stack Engineer, Laravel Developer, Vue.js Developer, TypeScript, Docker, Web Developer Philippines, Cagayan de Oro">
 	<meta name="author" content="Pete Eldrich Taruc">
@@ -37,7 +38,7 @@
 	<meta property="og:url" content="https://peteeldrichtaruc.dev/">
 	<meta property="og:title" content="Pete Eldrich Taruc | Full-Stack Engineer">
 	<meta property="og:description"
-		content="Full-Stack Engineer who owns the whole pipeline: maintainable project structure through secure, stable deployment. Laravel, Vue.js, TypeScript &amp; Docker.">
+		content="Full-Stack Engineer who owns the whole pipeline: maintainable project structure through secure, stable deployment.">
 	<meta property="og:image" content="https://peteeldrichtaruc.dev/screenshots/roomsforrent/RoomsForRent-dashboard.png">
 	<meta property="og:image:alt" content="Pete Eldrich Taruc portfolio: featured web application dashboard screenshot">
 	<meta property="og:site_name" content="Pete Eldrich Taruc">
@@ -45,7 +46,7 @@
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Pete Eldrich Taruc | Full-Stack Engineer">
 	<meta name="twitter:description"
-		content="Full-Stack Engineer who owns the whole pipeline: maintainable project structure through secure, stable deployment. Laravel, Vue.js, TypeScript &amp; Docker.">
+		content="Full-Stack Engineer who owns the whole pipeline: maintainable project structure through secure, stable deployment.">
 	<meta name="twitter:image" content="https://peteeldrichtaruc.dev/screenshots/roomsforrent/RoomsForRent-dashboard.png">
 	<meta name="twitter:image:alt" content="Pete Eldrich Taruc portfolio: featured web application dashboard screenshot">
 	<link rel="canonical" href="https://peteeldrichtaruc.dev/">
@@ -103,7 +104,7 @@
 </head>
 
 <body>
-	<a class="skip" href="#about">Skip to content</a>
+	<a class="skip" href="#main">Skip to content</a>
 
 	<div class="site">
 
@@ -163,11 +164,11 @@
 
 			<!-- Section Navigation -->
 			<nav class="nav" aria-label="Sections">
-				<a href="#about" aria-current="location">01. Summary</a>
-				<a href="#experience">02. Experience</a>
-				<a href="#projects">03. Projects</a>
-				<a href="#techStack">04. Tech Stack</a>
-				<a href="#certifications">05. Certifications</a>
+				<a href="#experience" aria-current="location">01. Experience</a>
+				<a href="#projects">02. Projects</a>
+				<a href="#techStack">03. Tech Stack</a>
+				<a href="#certifications">04. Certifications</a>
+				<a href="#contact">05. Contact</a>
 			</nav>
 
 			<!-- CTA Buttons -->
@@ -185,10 +186,14 @@
 			<section id="experience" class="hero" aria-labelledby="experience-title">
 				<p class="eyebrow">Career Timeline</p>
 				<h2 id="experience-title">Work Experience</h2>
+				<p class="hero__lead">
+					Full-Stack Engineer with 5+ years of experience building maintainable, secure, and
+					stable software.
+				</p>
 
 				<ol class="timeline">
 					<!-- eFox Solutions Inc. -->
-					<li class="job">
+					<li class="job" data-reveal>
 						<div class="job__date">Mar 2024 – Jul 2026</div>
 						<div class="job__body">
 							<h3>Full Stack Developer <span class="job__co">at eFox Solutions Inc.</span></h3>
@@ -203,7 +208,7 @@
 					</li>
 
 					<!-- Questronix Corporation -->
-					<li class="job">
+					<li class="job" data-reveal>
 						<div class="job__date">Sep 2022 – Mar 2024</div>
 						<div class="job__body">
 							<h3>Full Stack Developer <span class="job__co">at Questronix Corporation</span></h3>
@@ -217,7 +222,7 @@
 					</li>
 
 					<!-- LPM Software -->
-					<li class="job">
+					<li class="job" data-reveal>
 						<div class="job__date">Nov 2021 – Jul 2022</div>
 						<div class="job__body">
 							<h3>Web Developer <span class="job__co">at LPM Software</span></h3>
@@ -230,7 +235,7 @@
 					</li>
 
 					<!-- T22 Media LLC -->
-					<li class="job">
+					<li class="job" data-reveal>
 						<div class="job__date">Mar 2020 – Oct 2020</div>
 						<div class="job__body">
 							<h3>Web Developer <span class="job__co">at T22 Media LLC</span></h3>
@@ -242,7 +247,7 @@
 					</li>
 
 					<!-- Cloud Sea Media Group -->
-					<li class="job">
+					<li class="job" data-reveal>
 						<div class="job__date">Sep 2016 – Aug 2017</div>
 						<div class="job__body">
 							<h3>Frontend Developer <span class="job__co">at Cloud Sea Media Group</span></h3>
@@ -254,7 +259,7 @@
 					</li>
 
 					<!-- Winged Media -->
-					<li class="job">
+					<li class="job" data-reveal>
 						<div class="job__date">Sep 2016 – Nov 2016</div>
 						<div class="job__body">
 							<h3>Junior Web Developer <span class="job__co">at Winged Media</span></h3>
@@ -268,12 +273,12 @@
 
 			<!-- 2. Featured Projects -->
 			<section id="projects" class="section" aria-labelledby="projects-title">
-				<p class="eyebrow">Portfolio</p>
-				<h2 id="projects-title">Featured Projects</h2>
+				<p class="eyebrow" data-reveal>Portfolio</p>
+				<h2 id="projects-title" data-reveal>Featured Projects</h2>
 
 				<div class="projects">
 					<!-- Arkila -->
-					<article class="project">
+					<article class="project" data-reveal>
 						<div class="project__shot">
 							<img src="/screenshots/arkila/Arkila-landing.png" alt="Arkila Platform Screenshot"
 								loading="lazy" decoding="async" />
@@ -298,7 +303,7 @@
 					</article>
 
 					<!-- QuoteWorx -->
-					<article class="project">
+					<article class="project" data-reveal>
 						<div class="project__shot">
 							<img src="/screenshots/quoteworx/QuoteWorx-landing.png" alt="QuoteWorx Platform Screenshot"
 								loading="lazy" decoding="async" />
@@ -322,7 +327,7 @@
 					</article>
 
 					<!-- Bookd -->
-					<article class="project">
+					<article class="project" data-reveal>
 						<div class="project__shot">
 							<img src="/screenshots/bookd/Bookd-landing.png" alt="Bookd App Screenshot" loading="lazy"
 								decoding="async" />
@@ -349,12 +354,12 @@
 
 			<!-- 3. Technical Stack & Capabilities -->
 			<section id="techStack" class="section" aria-labelledby="stack-title">
-				<p class="eyebrow">Capabilities</p>
-				<h2 id="stack-title">Technical Stack</h2>
+				<p class="eyebrow" data-reveal>Capabilities</p>
+				<h2 id="stack-title" data-reveal>Technical Stack</h2>
 
 				<div class="stack">
 					<!-- Backend Architecture -->
-					<div class="stack__row">
+					<div class="stack__row" data-reveal>
 						<h3>Backend &amp; APIs</h3>
 						<ul class="chips">
 							<li class="chip">PHP</li>
@@ -371,7 +376,7 @@
 					</div>
 
 					<!-- Frontend Development -->
-					<div class="stack__row">
+					<div class="stack__row" data-reveal>
 						<h3>Frontend &amp; UI</h3>
 						<ul class="chips">
 							<li class="chip">Vue</li>
@@ -390,7 +395,7 @@
 					</div>
 
 					<!-- DevOps & Cloud Deployment -->
-					<div class="stack__row">
+					<div class="stack__row" data-reveal>
 						<h3>DevOps &amp; Cloud</h3>
 						<ul class="chips">
 							<li class="chip">Docker</li>
@@ -405,7 +410,7 @@
 					</div>
 
 					<!-- Workflow, AI & Engineering Practices -->
-					<div class="stack__row">
+					<div class="stack__row" data-reveal>
 						<h3>Workflow, AI &amp; Practices</h3>
 						<ul class="chips">
 							<li class="chip">Code Review</li>
@@ -426,11 +431,11 @@
 
 			<!-- 4. Certifications -->
 			<section id="certifications" class="section" aria-labelledby="certs-title">
-				<p class="eyebrow">Credentials</p>
-				<h2 id="certs-title">Certifications &amp; Badges</h2>
+				<p class="eyebrow" data-reveal>Credentials</p>
+				<h2 id="certs-title" data-reveal>Certifications &amp; Badges</h2>
 
 				<div>
-					<div class="cert">
+					<div class="cert" data-reveal>
 						<img src="/ibm-badge.png" alt="IBM Software Engineering Essentials" width="56" height="56" loading="lazy"
 							decoding="async" />
 						<div>
@@ -441,7 +446,7 @@
 						</div>
 					</div>
 
-					<div class="cert">
+					<div class="cert" data-reveal>
 						<img src="/ibm-design-thinking.png" alt="Enterprise Design Thinking Practitioner" width="56" height="56" loading="lazy"
 							decoding="async" />
 						<div>
@@ -455,11 +460,11 @@
 			</section>
 
 			<!-- 5. Contact & Footer -->
-			<section id="contact" class="contact" aria-labelledby="contact-title">
+			<section id="contact" class="contact" data-reveal aria-labelledby="contact-title">
 				<p class="eyebrow">Get in Touch</p>
 				<h2 id="contact-title">Let's build something great together.</h2>
 				<p class="contact__lead">
-					Open for full-stack engineering roles, SaaS development, and technical consulting.
+					Open to any software development role, from full-time positions to contract and project-based work.
 				</p>
 				<a class="btn btn--on-dark" href="mailto:peteeldrichtaruc.dev@gmail.com">
 					peteeldrichtaruc.dev@gmail.com
@@ -524,24 +529,63 @@
 				syncTheme();
 			});
 
-			// Scroll-spy for the section navigation
-			if ('IntersectionObserver' in window) {
-				var links = {};
-				document.querySelectorAll('.nav a[href^="#"]').forEach(function (a) {
-					links[a.getAttribute('href').slice(1)] = a;
-				});
-				var observer = new IntersectionObserver(function (entries) {
+			// Scroll reveal
+			var revealEls = document.querySelectorAll('[data-reveal]');
+			if (!('IntersectionObserver' in window) || reduceMotion.matches) {
+				revealEls.forEach(function (el) { el.classList.add('is-revealed'); });
+			} else {
+				var revealObserver = new IntersectionObserver(function (entries) {
+					var step = 0;
 					entries.forEach(function (entry) {
-						if (!entry.isIntersecting || !links[entry.target.id]) return;
-						Object.keys(links).forEach(function (id) { links[id].removeAttribute('aria-current'); });
-						links[entry.target.id].setAttribute('aria-current', 'location');
+						var el = entry.target;
+						// Already scrolled past (e.g. reload mid-page): show without animating
+						if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+							el.style.transitionDelay = '0ms';
+							el.classList.add('is-revealed');
+							revealObserver.unobserve(el);
+							return;
+						}
+						if (!entry.isIntersecting) return;
+						// Stagger only items that appear in the same pass
+						el.style.transitionDelay = Math.min(step, 4) * 90 + 'ms';
+						step++;
+						el.classList.add('is-revealed');
+						revealObserver.unobserve(el);
 					});
-				}, { rootMargin: '-30% 0px -60% 0px' });
-				Object.keys(links).forEach(function (id) {
-					var section = document.getElementById(id);
-					if (section) observer.observe(section);
+				}, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+				revealEls.forEach(function (el) { revealObserver.observe(el); });
+			}
+
+			// Scroll-spy for the section navigation
+			var links = {};
+			document.querySelectorAll('.nav a[href^="#"]').forEach(function (a) {
+				links[a.getAttribute('href').slice(1)] = a;
+			});
+			var ids = Object.keys(links).filter(function (id) { return document.getElementById(id); });
+			var spyTicking = false;
+			function setActive(id) {
+				ids.forEach(function (i) {
+					if (i === id) links[i].setAttribute('aria-current', 'location');
+					else links[i].removeAttribute('aria-current');
 				});
 			}
+			function syncSpy() {
+				spyTicking = false;
+				var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+				if (atBottom) { setActive(ids[ids.length - 1]); return; }
+				// Active section = last one whose top has passed 35% of the viewport
+				var line = window.innerHeight * 0.35;
+				var current = ids[0];
+				ids.forEach(function (id) {
+					if (document.getElementById(id).getBoundingClientRect().top <= line) current = id;
+				});
+				setActive(current);
+			}
+			window.addEventListener('scroll', function () {
+				if (!spyTicking) { spyTicking = true; window.requestAnimationFrame(syncSpy); }
+			}, { passive: true });
+			window.addEventListener('resize', syncSpy);
+			syncSpy();
 		})();
 	</script>
 </body>
