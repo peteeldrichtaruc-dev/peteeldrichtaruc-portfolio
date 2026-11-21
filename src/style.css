@@ -705,6 +705,13 @@ html.dark .icon-moon {
     object-fit: contain;
 }
 
+.project__note {
+    margin: .75rem 0 0;
+    font-size: .8125rem;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
 .project__head {
     display: flex;
     flex-wrap: wrap;
