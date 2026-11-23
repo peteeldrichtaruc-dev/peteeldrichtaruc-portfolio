@@ -705,6 +705,28 @@ html.dark .icon-moon {
     object-fit: contain;
 }
 
+/* The Android app: two phone screenshots under the web screenshot */
+.project__phones {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: .75rem;
+}
+
+.project__phones img {
+    display: block;
+    flex: 0 1 min(190px, 42%);
+    width: 42%;
+    max-width: 190px;
+    /* Only the top of each tall phone screenshot is shown, so the pair stays short */
+    aspect-ratio: 1 / 0.85;
+    object-fit: cover;
+    object-position: top;
+    border: 1px solid var(--line-strong);
+    border-radius: 16px;
+    box-shadow: var(--shot-shadow);
+}
+
 .project__note {
     margin: .75rem 0 0;
     font-size: .8125rem;
