@@ -705,7 +705,7 @@ html.dark .icon-moon {
     object-fit: contain;
 }
 
-/* The Android app: two phone screenshots fanned like playing cards over the lower right of the web screenshot (centred on phones) */
+/* The Android app: two phone screenshots side by side, aligned, over the lower right of the web screenshot (centred on phones) */
 .project__phones {
     position: relative;
     z-index: 2;
@@ -713,6 +713,7 @@ html.dark .icon-moon {
     justify-content: flex-end;   /* lower right on desktop */
     padding-right: 4%;
     align-items: flex-start;
+    gap: .75rem;
     margin: calc(-1 * clamp(2.5rem, 11vw, 6.4rem)) 0 .5rem; /* overlap grows with the screen */
     pointer-events: none;
 }
@@ -725,16 +726,6 @@ html.dark .icon-moon {
     border: 1px solid var(--line-strong);
     border-radius: 16px;
     box-shadow: 0 10px 28px rgba(0, 0, 0, .45);
-}
-
-.project__phones img:first-child {
-    transform: translateX(11px) rotate(-6deg);
-    transform-origin: bottom right;
-}
-
-.project__phones img:last-child {
-    transform: translateX(-11px) translateY(6px) rotate(5deg);
-    transform-origin: bottom left;
 }
 
 @media (max-width: 640px) {
