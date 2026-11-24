@@ -796,6 +796,12 @@ html.dark .icon-moon {
     transition: text-decoration-color .15s ease;
 }
 
+.project__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem 1.5rem;
+}
+
 .link:hover {
     text-decoration-color: currentColor;
 }
