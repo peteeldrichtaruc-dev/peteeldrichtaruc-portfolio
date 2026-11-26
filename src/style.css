@@ -6,48 +6,57 @@
 Design tokens
 ========================================================================== */
 :root {
-    --font-display: "Inter", "Onest", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-    --font-body: "Onest", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-display: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-body: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
-    --bg: #F2F5F6;
-    --surface: #FFFFFF;
-    --ink: #0E1A21;
-    --ink-2: #364852;
-    --muted: #566872;
-    --line: #DCE3E6;
-    --line-strong: #C3CED3;
+    /* The look: white page, cream panels, deep navy ink, and the original teal accent. */
+    --bg: #FFFFFF;
+    --surface: #FBF5EC;
+    --ink: #1F2D3D;
+    --ink-2: #3B4A5A;
+    --muted: #516070;
+    --line: #D7DDE3;
+    --line-strong: #B9C3CC;
 
     --accent: #0A7771;
     --accent-ink: #06524E;
     --accent-soft: #E2F2F0;
     --on-accent: #FFFFFF;
 
-    --inverse-bg: #0E1A21;
-    --inverse-ink: #F3F7F8;
-    --inverse-muted: #A9B8C1;
+    --inverse-bg: #1F2D3D;
+    --inverse-ink: #F3F6F8;
+    --inverse-muted: #B4C0CB;
     --inverse-line: transparent;
+    --on-dark-accent: #4FD1C4;
+    --on-dark-accent-hover: #7FE0D6;
+    --on-dark-eyebrow: #7FE0D6;
+    --on-dark-ink: #04201D;
 
-    --shot-shadow: 0 1px 2px rgba(14, 26, 33, .06), 0 18px 36px -22px rgba(14, 26, 33, .35);
+    --shot-shadow: 0 1px 2px rgba(31, 45, 61, .06), 0 18px 36px -22px rgba(31, 45, 61, .35);
 }
 
 html.dark {
-    --bg: #080F1E;
-    --surface: #0E1829;
+    --bg: #121B27;
+    --surface: #1A2636;
     --ink: #EAF0F4;
-    --ink-2: #C2CED7;
-    --muted: #8FA0AD;
-    --line: #1B283C;
-    --line-strong: #2A3B54;
+    --ink-2: #C4CFD9;
+    --muted: #93A3B2;
+    --line: #263649;
+    --line-strong: #34485E;
 
     --accent: #4FD1C4;
     --accent-ink: #7FE0D6;
     --accent-soft: #0F2E33;
     --on-accent: #04201D;
 
-    --inverse-bg: #0F1E30;
+    --inverse-bg: #1A2A3D;
     --inverse-ink: #EAF0F4;
-    --inverse-muted: #9FB0BD;
-    --inverse-line: #223550;
+    --inverse-muted: #A9B8C6;
+    --inverse-line: #2A3F57;
+    --on-dark-accent: #4FD1C4;
+    --on-dark-accent-hover: #7FE0D6;
+    --on-dark-eyebrow: #7FE0D6;
+    --on-dark-ink: #04201D;
 
     --shot-shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 18px 36px -22px rgba(0, 0, 0, .8);
 }
@@ -254,7 +263,7 @@ html.dark .icon-moon {
     flex: none;
     width: 4.5rem;
     height: 4.5rem;
-    border-radius: 16px;
+    border-radius: 8px;
     object-fit: cover;
     background: var(--surface);
     border: 1px solid var(--line-strong);
@@ -431,10 +440,10 @@ html.dark .icon-moon {
     align-items: center;
     justify-content: center;
     gap: .5rem;
-    min-height: 2.75rem;
-    padding: .65rem 1.1rem;
+    min-height: 2.5rem;
+    padding: .55rem 1.1rem;
     border: 1px solid transparent;
-    border-radius: 8px;
+    border-radius: 4px;
     font-family: inherit;
     font-size: .9375rem;
     font-weight: 600;
@@ -445,12 +454,12 @@ html.dark .icon-moon {
 }
 
 .btn--primary {
-    background: var(--ink);
-    color: var(--bg);
+    background: var(--accent);
+    color: var(--on-accent);
 }
 
 .btn--primary:hover {
-    background: var(--accent);
+    background: var(--accent-ink);
     color: var(--on-accent);
 }
 
@@ -691,7 +700,7 @@ html.dark .icon-moon {
 /* Screenshots render at their natural aspect ratio: nothing is cropped or zoomed */
 .project__shot {
     border: 1px solid var(--line-strong);
-    border-radius: 12px;
+    border-radius: 6px;
     background: var(--surface);
     box-shadow: var(--shot-shadow);
     overflow: hidden; /* only clips the rounded corners */
@@ -724,7 +733,7 @@ html.dark .icon-moon {
     max-width: 120px;
     height: auto;
     border: 1px solid var(--line-strong);
-    border-radius: 16px;
+    border-radius: 8px;
     box-shadow: 0 10px 28px rgba(0, 0, 0, .45);
 }
 
@@ -911,13 +920,13 @@ html.dark .icon-moon {
     margin-top: 5.5rem;
     padding: clamp(2rem, 5vw, 3.5rem);
     border: 1px solid var(--inverse-line);
-    border-radius: 20px;
+    border-radius: 8px;
     background: var(--inverse-bg);
     color: var(--inverse-muted);
 }
 
 .contact .eyebrow {
-    color: #7FE0D6;
+    color: var(--on-dark-eyebrow);
 }
 
 .stream .contact h2 {
@@ -938,13 +947,13 @@ html.dark .icon-moon {
 }
 
 .btn--on-dark {
-    background: #4FD1C4;
-    color: #04201D;
+    background: var(--on-dark-accent);
+    color: var(--on-dark-ink);
     overflow-wrap: anywhere;
 }
 
 .btn--on-dark:hover {
-    background: #7FE0D6;
+    background: var(--on-dark-accent-hover);
 }
 
 .footer {

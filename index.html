@@ -5,7 +5,7 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="color-scheme" content="light dark">
-	<meta name="theme-color" content="#F2F5F6">
+	<meta name="theme-color" content="#FFFFFF">
 
 	<!-- Dark Mode Prevention Flash Script -->
 	<script>
@@ -17,7 +17,7 @@
 			if (stored === 'dark' || (stored === null && prefersDark)) {
 				document.documentElement.classList.add('dark');
 				var m = document.querySelector('meta[name="theme-color"]');
-				if (m) m.setAttribute('content', '#080F1E');
+				if (m) m.setAttribute('content', '#121B27');
 			} else {
 				document.documentElement.classList.remove('dark');
 			}
@@ -64,7 +64,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link
-		href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500..700&family=Onest:wght@400..700&display=swap"
+		href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap"
 		rel="stylesheet">
 
 	<!-- Structured Data (JSON-LD) -->
@@ -142,7 +142,7 @@
 			</div>
 
 			<p class="rail__bio">
-				I perform AI-assisted engineering and best practices building reliable and maintainable software.
+				I perform AI-assisted engineering while following best practices to build reliable and maintainable software.
 			</p>
 
 			<!-- Quick Links -->
@@ -557,7 +557,7 @@
 			function syncTheme() {
 				var isDark = root.classList.contains('dark');
 				themeBtn.setAttribute('aria-pressed', String(isDark));
-				if (themeMeta) themeMeta.setAttribute('content', isDark ? '#080F1E' : '#F2F5F6');
+				if (themeMeta) themeMeta.setAttribute('content', isDark ? '#121B27' : '#FFFFFF');
 			}
 			syncTheme();
 			themeBtn.addEventListener('click', function () {
